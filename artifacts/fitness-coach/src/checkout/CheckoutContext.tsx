@@ -186,6 +186,7 @@ export function CheckoutProvider({ children }: { children: ReactNode }) {
     dispatch({ type: "SUBMIT_START" });
     try {
       // api-server is mounted at /api via the workspace proxy
+      const { getCurrentSource } = await import("@/lib/visitTracking");
       const res = await fetch(`/api/checkout/session`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -196,6 +197,7 @@ export function CheckoutProvider({ children }: { children: ReactNode }) {
           email: state.form.email.trim().toLowerCase(),
           phone: state.form.phone.trim(),
           kvkk: state.form.kvkk,
+          source: getCurrentSource(),
         }),
       });
       if (!res.ok) {

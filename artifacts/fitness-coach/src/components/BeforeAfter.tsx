@@ -1,5 +1,6 @@
-import { useRef, useState, useEffect } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useBeforeAfter, objectUrl } from "@/lib/usePublicData";
 
 import ba0 from "@assets/before_after/ba_0.jpg";
 import ba1 from "@assets/before_after/ba_1.jpg";
@@ -39,14 +40,20 @@ import ba34 from "@assets/before_after/ba_34.jpg";
 import ba35 from "@assets/before_after/ba_35.jpg";
 import ba36 from "@assets/before_after/ba_36.jpg";
 
-const allImages = [
+const fallbackImages = [
   ba0, ba1, ba2, ba3, ba4, ba5, ba6, ba7, ba8, ba9,
   ba10, ba11, ba12, ba13, ba14, ba15, ba16, ba17, ba18, ba19,
   ba20, ba21, ba22, ba23, ba24, ba25, ba26, ba27, ba28, ba29,
   ba30, ba31, ba32, ba33, ba34, ba35, ba36,
 ];
 
-function Lightbox({ idx, onClose, onPrev, onNext }: { idx: number; onClose: () => void; onPrev: () => void; onNext: () => void }) {
+interface Slide {
+  src: string;
+  thumb: string;
+  caption: string | null;
+}
+
+function Lightbox({ slides, idx, onClose, onPrev, onNext }: { slides: Slide[]; idx: number; onClose: () => void; onPrev: () => void; onNext: () => void }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -106,8 +113,8 @@ function Lightbox({ idx, onClose, onPrev, onNext }: { idx: number; onClose: () =
         onClick={(e) => e.stopPropagation()}
       >
         <img
-          src={allImages[idx]}
-          alt={`Dönüşüm ${idx + 1}`}
+          src={slides[idx]?.src ?? ""}
+          alt={slides[idx]?.caption ?? `Dönüşüm ${idx + 1}`}
           className="max-w-full max-h-[78vh] object-contain"
           style={{ border: "1px solid rgba(255,255,255,0.1)" }}
         />
@@ -115,8 +122,14 @@ function Lightbox({ idx, onClose, onPrev, onNext }: { idx: number; onClose: () =
           <span style={{ fontSize: "0.7rem", letterSpacing: "0.18em", fontWeight: 600 }}>DÖNÜŞÜM</span>
           <span style={{ width: "20px", height: "1px", background: "rgba(255,255,255,0.2)" }} />
           <span style={{ fontSize: "0.7rem", letterSpacing: "0.1em" }}>
-            {String(idx + 1).padStart(2, "0")} / {String(allImages.length).padStart(2, "0")}
+            {String(idx + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
           </span>
+          {slides[idx]?.caption && (
+            <>
+              <span style={{ width: "20px", height: "1px", background: "rgba(255,255,255,0.2)" }} />
+              <span style={{ fontSize: "0.74rem", color: "rgba(255,255,255,0.7)" }}>{slides[idx].caption}</span>
+            </>
+          )}
         </div>
       </motion.div>
     </motion.div>
@@ -132,6 +145,19 @@ export default function BeforeAfter() {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const { data: liveData } = useBeforeAfter();
+
+  const slides: Slide[] = useMemo(() => {
+    const live = liveData?.items ?? [];
+    if (live.length > 0) {
+      return live.map((m) => ({
+        src: objectUrl(m.objectPath) ?? "",
+        thumb: objectUrl(m.thumbObjectPath ?? m.objectPath) ?? "",
+        caption: m.caption,
+      }));
+    }
+    return fallbackImages.map((src) => ({ src, thumb: src, caption: null }));
+  }, [liveData]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!trackRef.current) return;
@@ -198,7 +224,7 @@ export default function BeforeAfter() {
           onMouseLeave={handleMouseLeave}
           data-testid="ba-track"
         >
-          {allImages.map((src, i) => {
+          {slides.map((slide, i) => {
             const aspectRatios = ["3/4", "4/5", "3/4", "2/3"];
             const aspect = aspectRatios[i % aspectRatios.length];
             return (
@@ -219,8 +245,8 @@ export default function BeforeAfter() {
                 data-testid={`ba-card-${i}`}
               >
                 <img
-                  src={src}
-                  alt={`Dönüşüm ${i + 1}`}
+                  src={slide.thumb}
+                  alt={slide.caption ?? `Dönüşüm ${i + 1}`}
                   className="w-full h-full object-cover pointer-events-none transition-transform duration-[1200ms] ease-out group-hover:scale-105"
                   style={{ filter: "brightness(0.92) contrast(1.08) saturate(0.95)" }}
                   draggable={false}
@@ -268,17 +294,18 @@ export default function BeforeAfter() {
           <span style={{ fontSize: "0.7rem", letterSpacing: "0.18em", fontWeight: 500 }}>SÜRÜKLE VEYA TIKLA</span>
         </div>
         <span className="font-display hidden md:block" style={{ color: "#444", fontSize: "0.7rem", letterSpacing: "0.14em", fontWeight: 500 }}>
-          {allImages.length} GERÇEK SONUÇ
+          {slides.length} GERÇEK SONUÇ
         </span>
       </div>
 
       <AnimatePresence>
         {lightboxIdx !== null && (
           <Lightbox
+            slides={slides}
             idx={lightboxIdx}
             onClose={() => setLightboxIdx(null)}
-            onPrev={() => setLightboxIdx((p) => (p === null ? null : (p - 1 + allImages.length) % allImages.length))}
-            onNext={() => setLightboxIdx((p) => (p === null ? null : (p + 1) % allImages.length))}
+            onPrev={() => setLightboxIdx((p) => (p === null ? null : (p - 1 + slides.length) % slides.length))}
+            onNext={() => setLightboxIdx((p) => (p === null ? null : (p + 1) % slides.length))}
           />
         )}
       </AnimatePresence>

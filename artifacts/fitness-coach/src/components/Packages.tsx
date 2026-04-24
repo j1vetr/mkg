@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { useCheckout } from "@/checkout/CheckoutContext";
 import type { PackageId } from "@/checkout/data";
+import { useResolvedPackages, usePackages } from "@/lib/usePublicData";
 
-const packages: Array<{
+interface PackageView {
   id: PackageId;
   num: string;
   duration: string;
@@ -13,52 +14,14 @@ const packages: Array<{
   tag: string | null;
   isConsult: boolean;
   blurb: string;
-}> = [
-  {
-    id: "3-ay",
-    num: "01",
-    duration: "3 Ay",
-    price: 6400,
-    monthly: "2.133",
-    highlight: false,
-    tag: null,
-    isConsult: false,
-    blurb: "İlk Somut Dönüşüm İçin Yeterli Süre. Sürece adapte olur, alışkanlıkları yerleşir.",
-  },
-  {
-    id: "6-ay",
-    num: "02",
-    duration: "6 Ay",
-    price: 9600,
-    monthly: "1.600",
-    highlight: true,
-    tag: "En Çok Tercih Edilen",
-    isConsult: false,
-    blurb: "Kalıcı Sonuç İçin Altın Denge. Çoğu danışanım bu süreçte fizyolojik olarak resetlenir.",
-  },
-  {
-    id: "12-ay",
-    num: "03",
-    duration: "12 Ay",
-    price: 16000,
-    monthly: "1.333",
-    highlight: false,
-    tag: null,
-    isConsult: false,
-    blurb: "Hayat Tarzı Dönüşümü İçin Tam Süre. Aylık maliyet en düşük seviyede.",
-  },
-  {
-    id: "gorusme",
-    num: "04",
-    duration: "30dk Görüşme",
-    price: 7000,
-    monthly: null,
-    highlight: false,
-    tag: null,
-    isConsult: true,
-    blurb: "Başlamadan önce sürecin sana uyup uymadığını anlamak için birebir video görüşme.",
-  },
-];
+}
+
+const META: Record<PackageId, { num: string; tag: string | null; isConsult: boolean }> = {
+  "3-ay": { num: "01", tag: null, isConsult: false },
+  "6-ay": { num: "02", tag: "En Çok Tercih Edilen", isConsult: false },
+  "12-ay": { num: "03", tag: null, isConsult: false },
+  gorusme: { num: "04", tag: null, isConsult: true },
+};
 
 const features = [
   "Kişiye Özel Antrenman Programı",
@@ -70,7 +33,7 @@ const features = [
   "Haftalık Form Kontrolü & Revizyon",
 ];
 
-function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; inView: boolean }) {
+function PackageCard({ pkg, i, inView }: { pkg: PackageView; i: number; inView: boolean }) {
   const [hover, setHover] = useState(false);
   const { open } = useCheckout();
   const dark = !pkg.highlight;
@@ -234,6 +197,33 @@ function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; i
 export default function Packages() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const resolved = useResolvedPackages();
+  const { data } = usePackages();
+  const liveMap = useMemo(() => {
+    const m = new Map<string, { highlight: boolean; active: boolean }>();
+    (data?.packages ?? []).forEach((p) => m.set(p.slug, { highlight: p.highlight, active: p.active }));
+    return m;
+  }, [data]);
+
+  const packages: PackageView[] = useMemo(() => {
+    return resolved
+      .filter((p) => liveMap.get(p.id)?.active !== false)
+      .map((p) => {
+        const meta = META[p.id];
+        const live = liveMap.get(p.id);
+        return {
+          id: p.id,
+          num: meta.num,
+          duration: p.duration,
+          price: p.price,
+          monthly: p.monthly,
+          highlight: live ? live.highlight : p.id === "6-ay",
+          tag: meta.tag,
+          isConsult: meta.isConsult,
+          blurb: p.blurb,
+        };
+      });
+  }, [resolved, liveMap]);
 
   return (
     <section id="paketler" style={{ background: "#060606", borderTop: "1px solid #1a1a1a" }} className="py-24 md:py-40">

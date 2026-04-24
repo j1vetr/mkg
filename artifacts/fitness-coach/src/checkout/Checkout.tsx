@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { getPackage } from "./data";
 import { useCheckout, type CheckoutForm, type CheckoutStep } from "./CheckoutContext";
+import { useResolvedPackage } from "@/lib/usePublicData";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -238,7 +238,7 @@ function StepContact() {
 
 function StepReview() {
   const { state, setField } = useCheckout();
-  const pkg = getPackage(state.packageId);
+  const pkg = useResolvedPackage(state.packageId);
   if (!pkg) return null;
   return (
     <div className="space-y-8">
@@ -344,7 +344,7 @@ function ReviewRow({ label, value }: { label: string; value: string }) {
 
 function SuccessScreen() {
   const { state, close } = useCheckout();
-  const pkg = getPackage(state.packageId);
+  const pkg = useResolvedPackage(state.packageId);
   const fullName = `${state.form.name}`.trim() || "Hoş geldin";
   return (
     <div className="flex flex-col items-center justify-center text-center" style={{ minHeight: "70vh", padding: "40px 24px" }}>
@@ -438,7 +438,7 @@ function SuccessScreen() {
 
 function PackageSummary() {
   const { state } = useCheckout();
-  const pkg = getPackage(state.packageId);
+  const pkg = useResolvedPackage(state.packageId);
   if (!pkg) return null;
   return (
     <div className="flex flex-col h-full" style={{ padding: "32px 28px" }}>
@@ -484,7 +484,7 @@ function PackageSummary() {
 
 function CompactPackageBar() {
   const { state } = useCheckout();
-  const pkg = getPackage(state.packageId);
+  const pkg = useResolvedPackage(state.packageId);
   if (!pkg) return null;
   return (
     <div
@@ -607,7 +607,7 @@ function BottomCTA() {
   const { state, setStep, setErrors, submit } = useCheckout();
   const idx = STEPS.findIndex((s) => s.id === state.step);
   const isLast = state.step === "onay";
-  const pkg = getPackage(state.packageId);
+  const pkg = useResolvedPackage(state.packageId);
 
   const valid = useMemo(() => {
     return Object.keys(validateStep(state.step, state.form)).length === 0;

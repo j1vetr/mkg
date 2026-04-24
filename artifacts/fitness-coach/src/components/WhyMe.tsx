@@ -5,7 +5,7 @@ const reasons = [
   {
     num: "01",
     title: "Sana Özel Sistem.",
-    desc: "Hazır program değil. Sıfırdan — senin hayat düzenine, alışkanlıklarına ve hedeflerine göre inşa edilen bir sistem.",
+    desc: "Hazır program değil. Sıfırdan, senin hayat düzenine, alışkanlıklarına ve hedeflerine göre inşa edilen bir sistem.",
   },
   {
     num: "02",
@@ -25,12 +25,12 @@ const reasons = [
   {
     num: "05",
     title: "Kan Tahlili Dahil.",
-    desc: "Antrenman ve beslenme programlarının ötesinde — kan değerlerini analiz ederek bütünsel bir strateji oluştururum.",
+    desc: "Antrenman ve beslenme programlarının ötesinde, kan değerlerini analiz ederek bütünsel bir strateji oluştururum.",
   },
   {
     num: "06",
     title: "Hayatın Uyar, Sen Değil.",
-    desc: "Yoğun iş, vardiyalı çalışma, düzensiz uyku — program bunlara göre şekillenir. Mükemmel koşullar beklenmez.",
+    desc: "Yoğun iş, vardiyalı çalışma, düzensiz uyku, program bunlara göre şekillenir. Mükemmel koşullar beklenmez.",
   },
 ];
 
