@@ -42,7 +42,7 @@ export default function Footer() {
           <h2
             className="font-display"
             style={{
-              fontSize: "clamp(2.4rem, 5vw, 4rem)",
+              fontSize: "clamp(2.2rem, 3.4vw, 3rem)",
               fontWeight: 700,
               letterSpacing: "-0.04em",
               color: "#FAFAFA",

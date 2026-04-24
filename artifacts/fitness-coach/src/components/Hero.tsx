@@ -34,7 +34,7 @@ export default function Hero() {
         <h1
           className="font-display mb-16 md:mb-20 text-center"
           style={{
-            fontSize: "clamp(2.6rem, 6.2vw, 5.6rem)",
+            fontSize: "clamp(2.6rem, 5.4vw, 4.8rem)",
             fontWeight: 700,
             letterSpacing: "-0.03em",
             color: "#FAFAFA",
