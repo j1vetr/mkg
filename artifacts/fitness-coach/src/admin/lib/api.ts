@@ -66,6 +66,8 @@ export interface RecentOrder {
   priceTry: number;
   status: string;
   source: string | null;
+  hasCondition: boolean;
+  conditionNote: string | null;
   createdAt: string;
 }
 

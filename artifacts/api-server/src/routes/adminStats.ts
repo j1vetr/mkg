@@ -115,6 +115,8 @@ router.get("/admin/stats", requireAdmin, async (_req, res) => {
       priceTry: o.priceTry,
       status: o.status,
       source: o.source,
+      hasCondition: o.hasCondition,
+      conditionNote: o.conditionNote,
       createdAt: o.createdAt,
     })),
   });

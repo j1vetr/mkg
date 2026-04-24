@@ -17,6 +17,8 @@ export interface CheckoutForm {
   email: string;
   phone: string;
   kvkk: boolean;
+  hasCondition: boolean;
+  conditionNote: string;
 }
 
 export interface CheckoutState {
@@ -35,6 +37,8 @@ const EMPTY_FORM: CheckoutForm = {
   email: "",
   phone: "",
   kvkk: true,
+  hasCondition: false,
+  conditionNote: "",
 };
 
 const INITIAL: CheckoutState = {
@@ -197,6 +201,8 @@ export function CheckoutProvider({ children }: { children: ReactNode }) {
           email: state.form.email.trim().toLowerCase(),
           phone: state.form.phone.trim(),
           kvkk: state.form.kvkk,
+          hasCondition: state.form.hasCondition,
+          conditionNote: state.form.hasCondition ? state.form.conditionNote.trim() : "",
           source: getCurrentSource(),
         }),
       });

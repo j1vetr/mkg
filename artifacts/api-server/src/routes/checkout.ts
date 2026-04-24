@@ -29,6 +29,9 @@ router.post("/checkout/session", async (req, res) => {
   const phone = String(body.phone ?? "").trim();
   const kvkk = body.kvkk === true;
   const source = typeof body.source === "string" ? body.source.slice(0, 128) : null;
+  const hasCondition = body.hasCondition === true;
+  const rawNote = typeof body.conditionNote === "string" ? body.conditionNote.trim() : "";
+  const conditionNote = hasCondition && rawNote.length > 0 ? rawNote.slice(0, 2000) : null;
 
   const pkgRows = await db
     .select()
@@ -56,6 +59,8 @@ router.post("/checkout/session", async (req, res) => {
     priceTry: pkg.priceTry,
     status: "ready",
     source,
+    hasCondition,
+    conditionNote,
   });
 
   const [local, domain] = email.split("@");

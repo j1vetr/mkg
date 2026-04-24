@@ -149,6 +149,7 @@ function Field({
 
 function StepIdentity() {
   const { state, setField, setErrors } = useCheckout();
+  const noteId = "koc-condition-note";
   return (
     <div className="space-y-7">
       <Field
@@ -178,9 +179,100 @@ function StepIdentity() {
         error={state.errors.surname}
         testId="field-surname"
       />
+
+      {/* Sakatlık / Özel Durum Sorusu */}
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "22px" }}>
+        <label
+          htmlFor="koc-has-condition"
+          className="flex items-start gap-3 cursor-pointer select-none"
+          style={{ fontSize: "0.88rem", color: "#ddd", lineHeight: 1.5 }}
+        >
+          <input
+            id="koc-has-condition"
+            type="checkbox"
+            checked={state.form.hasCondition}
+            onChange={(e) => setField("hasCondition", e.target.checked)}
+            className="sr-only"
+            data-testid="field-has-condition"
+          />
+          <span
+            aria-hidden="true"
+            className="shrink-0 mt-0.5 flex items-center justify-center"
+            style={{
+              width: "16px",
+              height: "16px",
+              border: state.form.hasCondition ? "1px solid #fff" : "1px solid rgba(255,255,255,0.3)",
+              background: state.form.hasCondition ? "#fff" : "transparent",
+              transition: "all 200ms",
+            }}
+          >
+            {state.form.hasCondition && (
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M1.5 5L4 7.5L8.5 2.5" stroke="#000" strokeWidth="1.6" strokeLinecap="square" />
+              </svg>
+            )}
+          </span>
+          <span>Sakatlığın veya özel bir durumun var mı?</span>
+        </label>
+
+        <AnimatePresence initial={false}>
+          {state.form.hasCondition && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.35, ease: EASE }}
+              style={{ overflow: "hidden" }}
+            >
+              <div style={{ paddingTop: "18px" }}>
+                <label
+                  htmlFor={noteId}
+                  className="font-display block"
+                  style={{
+                    fontSize: "0.6rem",
+                    letterSpacing: "0.22em",
+                    color: "#888",
+                    textTransform: "uppercase",
+                    fontWeight: 600,
+                    marginBottom: "10px",
+                  }}
+                >
+                  Durumunu Anlat
+                </label>
+                <textarea
+                  id={noteId}
+                  value={state.form.conditionNote}
+                  onChange={(e) => setField("conditionNote", e.target.value.slice(0, 2000))}
+                  placeholder="Sakatlık, kronik rahatsızlık, hamilelik, ameliyat geçmişi, ilaç kullanımı vb. — programını sana göre planlayabilmem için bilmem gerekenler."
+                  rows={5}
+                  className="w-full bg-transparent text-white outline-none"
+                  style={{
+                    border: "1px solid rgba(255,255,255,0.15)",
+                    padding: "14px 16px",
+                    fontSize: "0.92rem",
+                    lineHeight: 1.55,
+                    resize: "vertical",
+                    minHeight: "120px",
+                    fontFamily: "inherit",
+                  }}
+                  data-testid="field-condition-note"
+                />
+                <div
+                  className="flex items-center justify-between"
+                  style={{ marginTop: "8px", fontSize: "0.7rem", color: "#666" }}
+                >
+                  <span className="italic">Bu bilgi sadece koçun (ben) tarafından görüntülenir.</span>
+                  <span>{state.form.conditionNote.length} / 2000</span>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
       <p
         className="italic"
-        style={{ fontSize: "0.74rem", color: "#666", lineHeight: 1.6, paddingTop: "8px" }}
+        style={{ fontSize: "0.74rem", color: "#666", lineHeight: 1.6, paddingTop: "4px" }}
       >
         Bilgilerin yalnızca koçluk sürecin için kullanılır. Üçüncü taraflarla paylaşılmaz.
       </p>
@@ -254,7 +346,39 @@ function StepReview() {
           <ReviewRow label="E-posta" value={state.form.email} />
           <ReviewRow label="Telefon" value={state.form.phone} />
           <ReviewRow label="Paket" value={pkg.duration} />
+          <ReviewRow
+            label="Özel Durum"
+            value={state.form.hasCondition ? "Var" : "Yok"}
+          />
         </div>
+        {state.form.hasCondition && state.form.conditionNote.trim().length > 0 && (
+          <div
+            style={{
+              border: "1px solid rgba(255,255,255,0.12)",
+              padding: "16px 18px",
+              marginTop: "16px",
+              background: "rgba(255,255,255,0.02)",
+            }}
+            data-testid="review-condition-note"
+          >
+            <span
+              className="font-display block"
+              style={{
+                fontSize: "0.58rem",
+                letterSpacing: "0.22em",
+                color: "#888",
+                textTransform: "uppercase",
+                fontWeight: 600,
+                marginBottom: "8px",
+              }}
+            >
+              Notun
+            </span>
+            <p style={{ fontSize: "0.86rem", color: "#ddd", lineHeight: 1.6, whiteSpace: "pre-wrap" }}>
+              {state.form.conditionNote.trim()}
+            </p>
+          </div>
+        )}
       </div>
 
       <div>
@@ -548,7 +672,7 @@ function TopBar() {
       style={{ padding: "18px 20px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
     >
       <div className="flex items-center gap-4 min-w-0">
-        {canBack ? (
+        {canBack && (
           <button
             onClick={() => setStep(STEPS[idx - 1].id)}
             className="flex items-center justify-center"
@@ -560,10 +684,6 @@ function TopBar() {
               <path d="M14 8H2M2 8L6 4M2 8L6 12" stroke="currentColor" strokeWidth="1.4" />
             </svg>
           </button>
-        ) : (
-          <span className="font-display font-700 text-base tracking-tight text-white">
-            KOÇ<span style={{ opacity: 0.3 }}>.</span>
-          </span>
         )}
         {!isSuccess && (
           <span className="font-display" style={{ fontSize: "0.6rem", letterSpacing: "0.24em", color: "#777", fontWeight: 600 }}>

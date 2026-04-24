@@ -249,13 +249,21 @@ export default function AdminDashboard() {
                   <Th>Paket</Th>
                   <Th>Müşteri</Th>
                   <Th>İletişim</Th>
+                  <Th>Özel Durum / Not</Th>
                   <Th align="right">Tutar</Th>
                   <Th>Tarih</Th>
                 </tr>
               </thead>
               <tbody>
                 {data.recentOrders.map((o) => (
-                  <tr key={o.id} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                  <tr
+                    key={o.id}
+                    style={{
+                      borderBottom: "1px solid rgba(255,255,255,0.04)",
+                      background: o.hasCondition ? "rgba(255,255,255,0.025)" : "transparent",
+                    }}
+                    data-testid={`order-row-${o.orderCode}`}
+                  >
                     <Td>
                       <span className="font-display" style={{ color: "#FAFAFA", fontSize: "0.78rem" }}>
                         {o.orderCode}
@@ -273,6 +281,49 @@ export default function AdminDashboard() {
                       <span style={{ fontSize: "0.72rem", color: "#888" }}>{o.email}</span>
                       <br />
                       <span style={{ fontSize: "0.7rem", color: "#666" }}>{o.phone}</span>
+                    </Td>
+                    <Td>
+                      {o.hasCondition ? (
+                        <div
+                          style={{ maxWidth: "280px" }}
+                          data-testid={`order-condition-${o.orderCode}`}
+                        >
+                          <span
+                            className="font-display inline-block"
+                            style={{
+                              fontSize: "0.58rem",
+                              letterSpacing: "0.18em",
+                              color: "#000",
+                              background: "#FAFAFA",
+                              padding: "3px 8px",
+                              fontWeight: 700,
+                              textTransform: "uppercase",
+                              marginBottom: "6px",
+                            }}
+                          >
+                            Özel Durum
+                          </span>
+                          {o.conditionNote ? (
+                            <p
+                              style={{
+                                fontSize: "0.74rem",
+                                color: "#ddd",
+                                lineHeight: 1.55,
+                                whiteSpace: "pre-wrap",
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {o.conditionNote}
+                            </p>
+                          ) : (
+                            <span style={{ fontSize: "0.72rem", color: "#777", fontStyle: "italic" }}>
+                              Not eklenmemiş.
+                            </span>
+                          )}
+                        </div>
+                      ) : (
+                        <span style={{ fontSize: "0.72rem", color: "#444" }}>—</span>
+                      )}
                     </Td>
                     <Td align="right">
                       <span className="font-display" style={{ fontSize: "0.82rem", color: "#FAFAFA" }}>

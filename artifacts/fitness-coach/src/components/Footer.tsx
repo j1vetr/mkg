@@ -1,9 +1,13 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "wouter";
-import { useCheckout } from "@/checkout/CheckoutContext";
 
 const COACH_NAME = "Murat Kaan Günaydın";
+
+function scrollToPackages() {
+  const el = document.getElementById("paketler");
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
 const legalLinks = [
   { href: "/hakkimizda", label: "Hakkımızda" },
@@ -18,7 +22,6 @@ const legalLinks = [
 export default function Footer() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const { open } = useCheckout();
 
   return (
     <footer style={{ background: "#060606", borderTop: "1px solid #1a1a1a" }}>
@@ -57,7 +60,7 @@ export default function Footer() {
           </p>
 
           <button
-            onClick={() => open("6-ay")}
+            onClick={scrollToPackages}
             className="inline-flex items-center gap-4 font-display font-medium uppercase transition-all duration-300"
             style={{
               border: "1px solid #fff",
@@ -89,10 +92,7 @@ export default function Footer() {
       <div style={{ borderTop: "1px solid #1a1a1a" }} className="px-5 md:px-10 max-w-screen-xl mx-auto py-12 md:py-16">
         <div className="flex flex-col items-center text-center gap-8">
           <div className="flex flex-col items-center gap-2">
-            <span className="font-display font-bold text-lg tracking-tight" style={{ color: "#FAFAFA" }}>
-              KOÇ<span style={{ opacity: 0.3 }}>.</span>
-            </span>
-            <span className="font-display" style={{ fontSize: "0.78rem", color: "#888", letterSpacing: "0.04em" }}>
+            <span className="font-display" style={{ fontSize: "0.92rem", color: "#FAFAFA", letterSpacing: "0.04em", fontWeight: 600 }}>
               {COACH_NAME}
             </span>
             <span style={{ fontSize: "0.7rem", color: "#666", letterSpacing: "0.06em" }}>

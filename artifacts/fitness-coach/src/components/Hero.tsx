@@ -1,12 +1,15 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { useCheckout } from "@/checkout/CheckoutContext";
 
 const YOUTUBE_ID = "u0JdGzqdmIg";
 
+function scrollToPackages() {
+  const el = document.getElementById("paketler");
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const { open: openCheckout } = useCheckout();
 
   return (
     <section
@@ -123,7 +126,7 @@ export default function Hero() {
           className="flex flex-col items-center text-center"
         >
           <button
-            onClick={() => openCheckout("6-ay")}
+            onClick={scrollToPackages}
             className="font-display font-medium tracking-wider border border-white text-white hover:bg-white hover:text-black px-10 py-4 transition-all duration-400 text-sm uppercase"
             style={{ letterSpacing: "0.14em" }}
             data-testid="hero-cta-button"
