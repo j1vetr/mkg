@@ -243,7 +243,7 @@ function StepIdentity() {
                   id={noteId}
                   value={state.form.conditionNote}
                   onChange={(e) => setField("conditionNote", e.target.value.slice(0, 2000))}
-                  placeholder="Sakatlık, kronik rahatsızlık, hamilelik, ameliyat geçmişi, ilaç kullanımı vb. — programını sana göre planlayabilmem için bilmem gerekenler."
+                  placeholder="Sakatlık, kronik rahatsızlık, hamilelik, ameliyat geçmişi, ilaç kullanımı vb."
                   rows={5}
                   className="w-full bg-transparent text-white outline-none"
                   style={{

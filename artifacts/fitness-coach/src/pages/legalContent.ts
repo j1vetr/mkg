@@ -14,8 +14,8 @@ export interface LegalDoc {
 
 const COACH = "Murat Kaan Günaydın";
 const BRAND = "KOÇ.";
-const CONTACT_EMAIL = "iletisim@kocluk.com";
-const SUPPORT_PHONE = "+90 5XX XXX XX XX";
+const CONTACT_EMAIL = "mkaangunaydin@icloud.com";
+const SUPPORT_PHONE = "+90 501 595 44 14";
 const UPDATED = "01 Mayıs 2026";
 
 export const LEGAL_DOCS: Record<string, LegalDoc> = {
