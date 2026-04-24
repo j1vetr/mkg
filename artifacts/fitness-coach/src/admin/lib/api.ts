@@ -122,7 +122,7 @@ export const adminApi = {
       body: JSON.stringify(payload),
     }),
   media: () => request<{ items: MediaItem[] }>("/api/admin/before-after"),
-  uploadMedia: (file: File, fields: { caption?: string; weeks?: string; position?: number }) => {
+  uploadMedia: (file: File, fields: { caption?: string; weeks?: string; position?: number } = {}) => {
     const fd = new FormData();
     fd.append("file", file);
     if (fields.caption) fd.append("caption", fields.caption);

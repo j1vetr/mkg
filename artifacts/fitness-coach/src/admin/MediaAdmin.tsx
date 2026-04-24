@@ -4,21 +4,24 @@ import { adminApi, objectUrl, type MediaItem } from "./lib/api";
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
+const MAX_CONCURRENT = 3;
+
 export default function MediaAdmin() {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<string | null>(null);
+  const [progress, setProgress] = useState<{ done: number; total: number; failed: number } | null>(null);
   const [dragOver, setDragOver] = useState(false);
-  const [caption, setCaption] = useState("");
-  const [weeks, setWeeks] = useState("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const positionBaseRef = useRef(0);
 
   const reload = async () => {
     try {
       const r = await adminApi.media();
       setItems(r.items);
+      const maxPos = r.items.reduce((m, x) => Math.max(m, x.position ?? 0), 0);
+      positionBaseRef.current = maxPos;
     } catch (err) {
       setError(err instanceof Error ? err.message : "load_failed");
     } finally {
@@ -30,43 +33,49 @@ export default function MediaAdmin() {
     void reload();
   }, []);
 
-  const uploadOne = async (file: File) => {
-    setError(null);
-    setUploadProgress(`İşleniyor: ${file.name}`);
-    try {
-      const r = await adminApi.uploadMedia(file, {
-        caption: caption.trim() || undefined,
-        weeks: weeks.trim() || undefined,
-        position: items.length + 1,
-      });
-      setItems((prev) => [...prev, r.item]);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "upload_failed");
-      throw err;
-    }
-  };
-
   const handleFiles = async (files: FileList | File[]) => {
-    const list = Array.from(files);
+    const list = Array.from(files).filter((f) => f.type.startsWith("image/"));
     if (list.length === 0) return;
+
     setUploading(true);
     setError(null);
-    try {
-      let i = 0;
-      for (const f of list) {
-        i += 1;
-        setUploadProgress(`Yükleniyor (${i}/${list.length}): ${f.name}`);
-        await uploadOne(f);
+    let done = 0;
+    let failed = 0;
+    setProgress({ done: 0, total: list.length, failed: 0 });
+
+    const startPos = positionBaseRef.current;
+    let cursor = 0;
+
+    const next = async (): Promise<void> => {
+      const idx = cursor++;
+      if (idx >= list.length) return;
+      const file = list[idx];
+      try {
+        const r = await adminApi.uploadMedia(file, {
+          position: startPos + idx + 1,
+        });
+        setItems((prev) => [...prev, r.item]);
+      } catch {
+        failed += 1;
+      } finally {
+        done += 1;
+        setProgress({ done, total: list.length, failed });
       }
-      setCaption("");
-      setWeeks("");
-    } catch {
-      // already set error above
-    } finally {
-      setUploading(false);
-      setUploadProgress(null);
-      if (fileInputRef.current) fileInputRef.current.value = "";
+      return next();
+    };
+
+    const workers = Array.from({ length: Math.min(MAX_CONCURRENT, list.length) }, () => next());
+    await Promise.all(workers);
+
+    positionBaseRef.current = startPos + list.length;
+
+    if (failed > 0) {
+      setError(`${failed} dosya yüklenemedi.`);
     }
+
+    setUploading(false);
+    setTimeout(() => setProgress(null), 1500);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
@@ -89,14 +98,17 @@ export default function MediaAdmin() {
     }
   };
 
-  const onCaptionPatch = async (id: number, value: string) => {
-    setItems((prev) => prev.map((x) => (x.id === id ? { ...x, caption: value } : x)));
-    try {
-      await adminApi.patchMedia(id, { caption: value });
-    } catch {
-      // silent
+  const progressText = (() => {
+    if (!progress) return "Birden fazla dosya seçilebilir veya sürüklenebilir. JPG, PNG, WebP · maks. 25 MB / dosya.";
+    if (progress.done < progress.total) {
+      return `Yükleniyor… ${progress.done} / ${progress.total}${progress.failed ? ` · ${progress.failed} hatalı` : ""}`;
     }
-  };
+    return progress.failed
+      ? `Tamamlandı: ${progress.done - progress.failed} başarılı, ${progress.failed} hatalı.`
+      : `Tamamlandı: ${progress.done} dosya yüklendi.`;
+  })();
+
+  const progressPct = progress ? Math.round((progress.done / progress.total) * 100) : 0;
 
   return (
     <div className="space-y-10">
@@ -114,8 +126,8 @@ export default function MediaAdmin() {
           Before / After Yönetimi
         </h1>
         <p style={{ color: "#777", fontSize: "0.88rem", marginTop: "12px", maxWidth: "640px", lineHeight: 1.55 }}>
-          Görseller sunucuda otomatik olarak küçültülür ve WebP formatına dönüştürülür. Bir önce / sonra montajını
-          tek dosya halinde yüklemek en iyi sonucu verir.
+          Görseller sunucuda otomatik olarak küçültülür ve WebP'ye dönüştürülür. Birden fazla dosyayı bir
+          seferde seçebilir veya sürükleyip bırakabilirsin.
         </p>
       </motion.div>
 
@@ -129,56 +141,67 @@ export default function MediaAdmin() {
         }}
         onDragLeave={() => setDragOver(false)}
         onDrop={onDrop}
+        onClick={() => !uploading && fileInputRef.current?.click()}
+        role="button"
+        tabIndex={0}
         style={{
-          background: "#0c0c0c",
+          background: dragOver ? "#101010" : "#0c0c0c",
           border: dragOver ? "1px dashed #FAFAFA" : "1px dashed rgba(255,255,255,0.18)",
-          padding: "32px 28px",
-          transition: "border-color 0.25s",
+          padding: "44px 28px",
+          transition: "border-color 0.25s, background 0.25s",
+          cursor: uploading ? "not-allowed" : "pointer",
+          textAlign: "center",
         }}
         data-testid="media-dropzone"
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-          <Field label="Açıklama (opsiyonel)">
-            <input
-              type="text"
-              value={caption}
-              onChange={(e) => setCaption(e.target.value)}
-              className="ac-input"
-              placeholder="Örn. Mehmet, 90 gün"
-              data-testid="media-caption"
-            />
-          </Field>
-          <Field label="Süre Etiketi (opsiyonel)">
-            <input
-              type="text"
-              value={weeks}
-              onChange={(e) => setWeeks(e.target.value)}
-              className="ac-input"
-              placeholder="Örn. 12 Hafta"
-              data-testid="media-weeks"
-            />
-          </Field>
-          <div className="flex items-end">
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              disabled={uploading}
-              className="font-display w-full"
-              style={{
-                background: "#FAFAFA",
-                color: "#0a0a0a",
-                padding: "14px 22px",
-                fontSize: "0.72rem",
-                letterSpacing: "0.18em",
-                fontWeight: 600,
-                cursor: uploading ? "not-allowed" : "pointer",
-                opacity: uploading ? 0.6 : 1,
-              }}
-              data-testid="media-upload-button"
-            >
-              {uploading ? "YÜKLENİYOR…" : "DOSYA SEÇ VEYA SÜRÜKLE"}
-            </button>
-          </div>
+        <div
+          className="font-display"
+          style={{
+            fontSize: "0.7rem",
+            letterSpacing: "0.32em",
+            color: "#666",
+            marginBottom: "16px",
+          }}
+        >
+          TOPLU YÜKLEME
         </div>
+        <div
+          className="font-display"
+          style={{
+            fontSize: "clamp(1.2rem, 2.2vw, 1.6rem)",
+            fontWeight: 600,
+            letterSpacing: "-0.01em",
+            color: "#FAFAFA",
+            marginBottom: "8px",
+          }}
+        >
+          {uploading ? "Yükleniyor…" : "Dosyaları Seç veya Buraya Sürükle"}
+        </div>
+        <div style={{ fontSize: "0.78rem", color: "#888", marginBottom: "18px" }}>
+          {progressText}
+        </div>
+
+        {progress && (
+          <div
+            style={{
+              maxWidth: "420px",
+              margin: "0 auto",
+              height: "3px",
+              background: "rgba(255,255,255,0.08)",
+              overflow: "hidden",
+            }}
+          >
+            <div
+              style={{
+                width: `${progressPct}%`,
+                height: "100%",
+                background: "#FAFAFA",
+                transition: "width 0.3s ease-out",
+              }}
+            />
+          </div>
+        )}
+
         <input
           ref={fileInputRef}
           type="file"
@@ -188,9 +211,6 @@ export default function MediaAdmin() {
           style={{ display: "none" }}
           data-testid="media-file-input"
         />
-        <div style={{ fontSize: "0.7rem", color: "#666" }}>
-          {uploadProgress ?? "Birden fazla dosya seçilebilir. JPG, PNG, WebP desteklenir. Maks. 25 MB."}
-        </div>
       </motion.div>
 
       {error && (
@@ -237,14 +257,15 @@ export default function MediaAdmin() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.96 }}
                     transition={{ duration: 0.4, ease: EASE }}
-                    style={{ background: "#0c0c0c" }}
+                    style={{ background: "#0c0c0c", position: "relative" }}
                     data-testid={`media-item-${m.id}`}
                   >
                     <div style={{ position: "relative", aspectRatio: "4/5", overflow: "hidden" }}>
                       {url ? (
                         <img
                           src={url}
-                          alt={m.caption ?? "Dönüşüm"}
+                          alt="Dönüşüm"
+                          loading="lazy"
                           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                         />
                       ) : (
@@ -255,43 +276,45 @@ export default function MediaAdmin() {
                           —
                         </div>
                       )}
-                    </div>
-                    <div style={{ padding: "12px 14px" }}>
-                      <input
-                        type="text"
-                        value={m.caption ?? ""}
-                        onChange={(e) => onCaptionPatch(m.id, e.target.value)}
-                        placeholder="Açıklama"
+                      <span
+                        className="font-display"
                         style={{
-                          width: "100%",
+                          position: "absolute",
+                          top: "10px",
+                          left: "10px",
+                          background: "rgba(0,0,0,0.6)",
+                          backdropFilter: "blur(6px)",
+                          color: "#FAFAFA",
+                          fontSize: "0.6rem",
+                          letterSpacing: "0.18em",
+                          padding: "4px 8px",
+                        }}
+                      >
+                        #{m.position}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between" style={{ padding: "10px 14px" }}>
+                      <span style={{ fontSize: "0.66rem", color: "#666" }}>
+                        {m.width && m.height ? `${m.width}×${m.height}` : ""}
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          void onDelete(m.id);
+                        }}
+                        className="font-display"
+                        style={{
+                          fontSize: "0.6rem",
+                          letterSpacing: "0.18em",
+                          color: "#888",
                           background: "transparent",
                           border: 0,
-                          color: "#FAFAFA",
-                          fontSize: "0.78rem",
-                          padding: "4px 0",
-                          outline: "none",
-                          borderBottom: "1px solid rgba(255,255,255,0.08)",
+                          cursor: "pointer",
                         }}
-                        data-testid={`media-caption-${m.id}`}
-                      />
-                      <div className="flex items-center justify-between mt-3">
-                        <span style={{ fontSize: "0.66rem", color: "#666" }}>{m.weeks ?? ""}</span>
-                        <button
-                          onClick={() => void onDelete(m.id)}
-                          className="font-display"
-                          style={{
-                            fontSize: "0.6rem",
-                            letterSpacing: "0.18em",
-                            color: "#888",
-                            background: "transparent",
-                            border: 0,
-                            cursor: "pointer",
-                          }}
-                          data-testid={`media-delete-${m.id}`}
-                        >
-                          SİL
-                        </button>
-                      </div>
+                        data-testid={`media-delete-${m.id}`}
+                      >
+                        SİL
+                      </button>
                     </div>
                   </motion.div>
                 );
@@ -300,36 +323,6 @@ export default function MediaAdmin() {
           </div>
         )}
       </div>
-
-      <style>{`
-        .ac-input {
-          width: 100%;
-          background: transparent;
-          border: 0;
-          border-bottom: 1px solid rgba(255,255,255,0.12);
-          padding: 10px 0;
-          color: #FAFAFA;
-          font-size: 0.92rem;
-          outline: none;
-          transition: border-color 0.3s;
-          font-family: inherit;
-        }
-        .ac-input:focus { border-bottom-color: #FAFAFA; }
-      `}</style>
     </div>
-  );
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <label className="block">
-      <span
-        className="block font-display"
-        style={{ fontSize: "0.6rem", letterSpacing: "0.22em", color: "#777", marginBottom: "6px" }}
-      >
-        {label.toUpperCase()}
-      </span>
-      {children}
-    </label>
   );
 }
