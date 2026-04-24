@@ -71,14 +71,15 @@ export default function Hero() {
             }}
             data-testid="hero-illusion-line"
           >
+            Bu{" "}
             <span className="relative inline-block">
-              Bu İllüzyon Bitti.
-              {/* Animated strike-through that draws across once the line is visible */}
+              İllüzyon
+              {/* Animated strike-through that draws across just the word "İllüzyon" */}
               <motion.span
                 aria-hidden
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: 1.1, delay: 1.05, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.9, delay: 1.05, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute left-0 right-0 pointer-events-none"
                 style={{
                   top: "55%",
@@ -87,7 +88,8 @@ export default function Hero() {
                   transformOrigin: "left center",
                 }}
               />
-            </span>
+            </span>{" "}
+            Bitti.
           </motion.span>
         </h1>
 
