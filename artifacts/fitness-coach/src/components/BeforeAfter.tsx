@@ -147,6 +147,33 @@ export default function BeforeAfter() {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const { data: liveData } = useBeforeAfter();
 
+  // After a mouse drag ends (or any imperative scroll), nudge the track to the
+  // nearest card so it never gets stuck between two photos. Native touch scroll
+  // already snaps via CSS scroll-snap, but JS-driven mouse drag bypasses that.
+  const snapToNearest = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    const cards = Array.from(track.querySelectorAll<HTMLElement>("[data-ba-card]"));
+    if (cards.length === 0) return;
+    const trackRect = track.getBoundingClientRect();
+    const trackCenter = trackRect.left + trackRect.width / 2;
+    let bestIdx = 0;
+    let bestDist = Infinity;
+    cards.forEach((c, i) => {
+      const r = c.getBoundingClientRect();
+      const center = r.left + r.width / 2;
+      const d = Math.abs(center - trackCenter);
+      if (d < bestDist) {
+        bestDist = d;
+        bestIdx = i;
+      }
+    });
+    const target = cards[bestIdx];
+    const tRect = target.getBoundingClientRect();
+    const offset = tRect.left + tRect.width / 2 - trackCenter;
+    track.scrollBy({ left: offset, behavior: "smooth" });
+  };
+
   const slides: Slide[] = useMemo(() => {
     const live = liveData?.items ?? [];
     if (live.length > 0) {
@@ -176,8 +203,14 @@ export default function BeforeAfter() {
     trackRef.current.scrollLeft = scrollLeft - walk;
   };
 
-  const handleMouseUp = () => setDragging(false);
-  const handleMouseLeave = () => setDragging(false);
+  const handleMouseUp = () => {
+    if (dragging && moved) snapToNearest();
+    setDragging(false);
+  };
+  const handleMouseLeave = () => {
+    if (dragging && moved) snapToNearest();
+    setDragging(false);
+  };
 
   const openLightbox = (i: number) => {
     if (moved) return;
@@ -217,6 +250,17 @@ export default function BeforeAfter() {
             paddingRight: "max(24px, calc((100vw - 1280px) / 2 + 40px))",
             cursor: dragging ? "grabbing" : "grab",
             userSelect: "none",
+            // Native touch panning — horizontal swipe scrolls the track,
+            // vertical swipe still scrolls the page.
+            touchAction: "pan-x pan-y",
+            WebkitOverflowScrolling: "touch",
+            // Snap to the nearest card so the carousel never stops between
+            // two photos. `scroll-snap-stop: always` (set on each card) keeps
+            // each swipe to a single card at a time.
+            scrollSnapType: "x mandatory",
+            scrollPaddingLeft: "max(24px, calc((100vw - 1280px) / 2 + 40px))",
+            scrollPaddingRight: "max(24px, calc((100vw - 1280px) / 2 + 40px))",
+            overscrollBehaviorX: "contain",
           }}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
@@ -240,7 +284,10 @@ export default function BeforeAfter() {
                   background: "#0d0d0d",
                   border: "1px solid #1f1f1f",
                   cursor: "zoom-in",
+                  scrollSnapAlign: "center",
+                  scrollSnapStop: "always",
                 }}
+                data-ba-card
                 onClick={() => openLightbox(i)}
                 data-testid={`ba-card-${i}`}
               >
