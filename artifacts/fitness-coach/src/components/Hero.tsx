@@ -141,7 +141,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* CTA — centered, bold, with arrow circle that animates on hover */}
+        {/* CTA — centered, outline button (original style) with shorter, more assertive copy */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -150,69 +150,29 @@ export default function Hero() {
         >
           <button
             onClick={scrollToPackages}
-            className="hero-cta group relative inline-flex items-center bg-white text-black overflow-hidden"
-            style={{
-              paddingLeft: "clamp(28px, 4vw, 40px)",
-              paddingRight: "clamp(8px, 1.2vw, 12px)",
-              paddingTop: "clamp(8px, 1.2vw, 12px)",
-              paddingBottom: "clamp(8px, 1.2vw, 12px)",
-              gap: "clamp(20px, 2.5vw, 32px)",
-              transition: "transform 600ms cubic-bezier(0.16,1,0.3,1)",
-            }}
+            className="font-display font-medium tracking-wider border border-white text-white hover:bg-white hover:text-black px-10 py-4 transition-all duration-400 text-sm"
+            style={{ letterSpacing: "0.14em" }}
             data-testid="hero-cta-button"
-            aria-label="Başvur ve Değiş — paket seçimine git"
           >
-            {/* Sweep highlight on hover — soft dark tint that travels across the white button */}
-            <span
-              aria-hidden
-              className="hero-cta-sweep pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(110deg, transparent 25%, rgba(0,0,0,0.10) 45%, rgba(0,0,0,0.18) 50%, rgba(0,0,0,0.10) 55%, transparent 75%)",
-              }}
-            />
-            <span
-              className="font-display relative z-10"
-              style={{
-                fontSize: "clamp(0.95rem, 1.25vw, 1.15rem)",
-                letterSpacing: "0.16em",
-                fontWeight: 700,
-                textTransform: "uppercase",
-              }}
-            >
-              Başvur ve Değiş
-            </span>
-            <span
-              className="hero-cta-arrow relative z-10 flex items-center justify-center bg-black text-white shrink-0"
-              style={{
-                width: "clamp(48px, 5vw, 60px)",
-                height: "clamp(48px, 5vw, 60px)",
-                borderRadius: "9999px",
-                transition: "transform 700ms cubic-bezier(0.16,1,0.3,1)",
-              }}
-            >
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M5 11h12m0 0l-5-5m5 5l-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="square" />
-              </svg>
-            </span>
+            YERİNİ AL
           </button>
 
-          {/* Urgency micro-line */}
+          {/* Editorial scroll cue — replaces the urgency dots line, mirrors the section-label aesthetic */}
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
             className="mt-7 flex items-center justify-center gap-3"
-            style={{ color: "#7a7a7a" }}
+            style={{ color: "#888" }}
           >
-            <span style={{ width: "4px", height: "4px", borderRadius: "9999px", background: "#FAFAFA" }} />
+            <span style={{ height: "1px", width: "24px", background: "#444" }} />
             <span
               className="font-display"
-              style={{ fontSize: "0.7rem", letterSpacing: "0.22em", fontWeight: 500, textTransform: "uppercase" }}
+              style={{ fontSize: "0.7rem", letterSpacing: "0.22em", fontWeight: 500 }}
             >
-              Sınırlı Kontenjan · 60 Saniyede Başvur
+              PAKETLERİ KEŞFET
             </span>
-            <span style={{ width: "4px", height: "4px", borderRadius: "9999px", background: "#FAFAFA" }} />
+            <span style={{ height: "1px", width: "24px", background: "#444" }} />
           </motion.div>
         </motion.div>
       </div>
