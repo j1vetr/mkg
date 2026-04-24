@@ -23,7 +23,7 @@ const packages: Array<{
     highlight: false,
     tag: null,
     isConsult: false,
-    blurb: "İlk somut dönüşüm için yeterli süre. Sürece adapte olur, alışkanlıkları yerleşir.",
+    blurb: "İlk Somut Dönüşüm İçin Yeterli Süre. Sürece adapte olur, alışkanlıkları yerleşir.",
   },
   {
     id: "6-ay",
@@ -32,9 +32,9 @@ const packages: Array<{
     price: 9600,
     monthly: "1.600",
     highlight: true,
-    tag: "En çok tercih edilen",
+    tag: "En Çok Tercih Edilen",
     isConsult: false,
-    blurb: "Kalıcı sonuç için altın denge. Çoğu danışanım bu süreçte fizyolojik olarak resetlenir.",
+    blurb: "Kalıcı Sonuç İçin Altın Denge. Çoğu danışanım bu süreçte fizyolojik olarak resetlenir.",
   },
   {
     id: "12-ay",
@@ -45,7 +45,7 @@ const packages: Array<{
     highlight: false,
     tag: null,
     isConsult: false,
-    blurb: "Hayat tarzı dönüşümü için tam süre. Aylık maliyet en düşük seviyede.",
+    blurb: "Hayat Tarzı Dönüşümü İçin Tam Süre. Aylık maliyet en düşük seviyede.",
   },
   {
     id: "gorusme",
@@ -89,13 +89,11 @@ function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; i
       transition={{ duration: 0.85, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="relative flex flex-col"
+      className="relative flex flex-col p-7 sm:p-8 md:p-10"
       style={{
         background: dark ? (hover ? "#101010" : "#0a0a0a") : "#FAFAFA",
         color: fg,
-        padding: "44px 32px 36px",
         transition: "background 0.5s ease, transform 0.5s ease",
-        minHeight: "660px",
         transform: hover && !pkg.highlight ? "translateY(-4px)" : "translateY(0)",
       }}
       data-testid={`package-card-${pkg.id}`}
@@ -106,20 +104,18 @@ function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; i
           style={{
             background: "#0a0a0a",
             color: "#fff",
-            fontSize: "0.62rem",
+            fontSize: "0.6rem",
             letterSpacing: "0.24em",
             fontWeight: 600,
             textTransform: "uppercase",
           }}
         >
-          <span style={{ width: "4px", height: "4px", background: "#fff", borderRadius: "50%" }} />
           {pkg.tag}
-          <span style={{ width: "4px", height: "4px", background: "#fff", borderRadius: "50%" }} />
         </div>
       )}
 
       <div style={{ paddingTop: pkg.highlight ? "20px" : "0" }} className="flex flex-col h-full">
-        <div className="flex items-start justify-between mb-12">
+        <div className="flex items-start justify-between mb-8 md:mb-12">
           <div>
             <span
               className="font-display block"
@@ -129,7 +125,7 @@ function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; i
             </span>
             <span
               className="font-display block mt-2"
-              style={{ fontSize: "1.35rem", fontWeight: 600, letterSpacing: "-0.02em", color: fg }}
+              style={{ fontSize: "1.4rem", fontWeight: 600, letterSpacing: "-0.02em", color: fg }}
             >
               {pkg.duration}
             </span>
@@ -140,7 +136,7 @@ function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; i
           <span
             className="font-display"
             style={{
-              fontSize: "clamp(2.8rem, 5.2vw, 4.4rem)",
+              fontSize: "clamp(2.6rem, 5.2vw, 4.4rem)",
               fontWeight: 700,
               letterSpacing: "-0.045em",
               lineHeight: 0.9,
@@ -149,26 +145,26 @@ function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; i
           >
             {formattedPrice}
           </span>
-          <span style={{ fontSize: "0.8rem", color: fgMuted, fontWeight: 500, letterSpacing: "0.06em" }}>TL</span>
+          <span style={{ fontSize: "0.85rem", color: fgMuted, fontWeight: 500, letterSpacing: "0.06em" }}>TL</span>
         </div>
 
         <div className="mb-7 h-5">
           {pkg.monthly && (
-            <span style={{ fontSize: "0.75rem", color: fgMuted, letterSpacing: "0.04em" }}>
-              ≈ ayda {pkg.monthly} TL
+            <span style={{ fontSize: "0.78rem", color: fgMuted, letterSpacing: "0.04em" }}>
+              ≈ Ayda {pkg.monthly} TL
             </span>
           )}
         </div>
 
         <p
-          className="mb-9"
-          style={{ fontSize: "0.9rem", lineHeight: 1.6, color: fgMuted, maxWidth: "280px" }}
+          className="mb-8"
+          style={{ fontSize: "0.92rem", lineHeight: 1.6, color: fgMuted, maxWidth: "280px" }}
         >
           {pkg.blurb}
         </p>
 
         {!pkg.isConsult ? (
-          <div className="flex-1 mb-10" style={{ borderTop: `1px solid ${hairline}` }}>
+          <div className="flex-1 mb-8" style={{ borderTop: `1px solid ${hairline}` }}>
             {features.map((f) => (
               <div
                 key={f}
@@ -187,21 +183,21 @@ function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; i
                 >
                   —
                 </span>
-                <span style={{ fontSize: "0.83rem", lineHeight: 1.45, color: fg, opacity: 0.92 }}>
+                <span style={{ fontSize: "0.86rem", lineHeight: 1.45, color: fg, opacity: 0.92 }}>
                   {f}
                 </span>
               </div>
             ))}
           </div>
         ) : (
-          <div className="flex-1 mb-10" style={{ borderTop: `1px solid ${hairline}`, borderBottom: `1px solid ${hairline}`, padding: "20px 0" }}>
+          <div className="flex-1 mb-8" style={{ borderTop: `1px solid ${hairline}`, borderBottom: `1px solid ${hairline}`, padding: "20px 0" }}>
             <span
               className="font-display block mb-4"
               style={{ fontSize: "0.65rem", color: fgVeryMuted, letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: 500 }}
             >
               Tek Seferlik Görüşme
             </span>
-            <p style={{ fontSize: "0.9rem", lineHeight: 1.7, color: fg, opacity: 0.85 }}>
+            <p style={{ fontSize: "0.92rem", lineHeight: 1.7, color: fg, opacity: 0.85 }}>
               30 dakikalık birebir video görüşme. Hedeflerini, mevcut durumunu ve sürecin sana uygunluğunu birlikte değerlendiririz.
             </p>
           </div>
@@ -220,7 +216,7 @@ function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; i
         >
           <span
             className="font-display"
-            style={{ fontSize: "0.78rem", letterSpacing: "0.18em", fontWeight: 600, textTransform: "uppercase" }}
+            style={{ fontSize: "0.8rem", letterSpacing: "0.18em", fontWeight: 600, textTransform: "uppercase" }}
           >
             Başvur
           </span>
@@ -248,38 +244,33 @@ export default function Packages() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="paketler" style={{ background: "#060606", borderTop: "1px solid #1a1a1a" }} className="py-28 md:py-40">
-      <div className="px-6 md:px-10 max-w-screen-xl mx-auto">
+    <section id="paketler" style={{ background: "#060606", borderTop: "1px solid #1a1a1a" }} className="py-24 md:py-40">
+      <div className="px-5 md:px-10 max-w-screen-xl mx-auto">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="mb-16 md:mb-24"
+          className="mb-12 md:mb-20 text-center md:text-left"
         >
-          <div className="flex items-center gap-4 mb-8">
+          <div className="flex items-center justify-center md:justify-start gap-4 mb-8">
             <div style={{ width: "32px", height: "1px", background: "#555" }} />
             <span className="section-label" style={{ color: "#999" }}>Paketler</span>
+            <div className="md:hidden" style={{ width: "32px", height: "1px", background: "#555" }} />
           </div>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
             <h2
-              className="font-display"
-              style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1, maxWidth: "780px" }}
+              className="font-display mx-auto md:mx-0"
+              style={{ fontSize: "clamp(2.1rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1, maxWidth: "780px" }}
             >
-              Dönüşüme yatırım yapmanın
+              Dönüşüme Yatırım Yapmanın
               <br />
-              <span style={{ color: "#5a5a5a" }}>tek doğru zamanı şimdi.</span>
+              <span style={{ color: "#5a5a5a" }}>Tek Doğru Zamanı Şimdi.</span>
             </h2>
-            <div style={{ maxWidth: "320px" }}>
+            <div style={{ maxWidth: "320px" }} className="mx-auto md:mx-0">
               <p style={{ color: "#A8A8A8", lineHeight: 1.7, fontSize: "0.95rem" }}>
                 Sınırlı kontenjanla çalışıyorum. Her danışana gereken ilgiyi verebilmek için kapasitemi düşük tutuyorum.
               </p>
-              <div className="flex items-center gap-3 mt-5" style={{ color: "#777" }}>
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#fff" }} />
-                <span style={{ fontSize: "0.7rem", letterSpacing: "0.18em", fontWeight: 500 }}>
-                  Mayıs için kontenjan açık
-                </span>
-              </div>
             </div>
           </div>
         </motion.div>
@@ -297,15 +288,15 @@ export default function Packages() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+          className="mt-8 md:mt-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
           style={{ color: "#777" }}
         >
           <div className="flex items-center gap-3">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0">
               <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1" />
               <path d="M7 4V8M7 10V10.01" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
             </svg>
-            <span style={{ fontSize: "0.8rem", letterSpacing: "0.04em" }}>
+            <span style={{ fontSize: "0.8rem", letterSpacing: "0.04em", lineHeight: 1.5 }}>
               Tüm paketler aynı kalitede koçluk hizmetini içerir. Süre uzadıkça aylık maliyet düşer.
             </span>
           </div>

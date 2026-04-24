@@ -4,32 +4,32 @@ import { motion, useInView } from "framer-motion";
 const reasons = [
   {
     num: "01",
-    title: "Sana özel sistem.",
+    title: "Sana Özel Sistem.",
     desc: "Hazır program değil. Sıfırdan — senin hayat düzenine, alışkanlıklarına ve hedeflerine göre inşa edilen bir sistem.",
   },
   {
     num: "02",
-    title: "Bilim, sadelikle.",
+    title: "Bilim, Sadelikle.",
     desc: "Bilimsel temeller üzerine kurulu ama gereksiz karmaşıklaştırılmayan programlar. Sürdürülebilirlik her şeyin önünde gelir.",
   },
   {
     num: "03",
-    title: "7/24 erişim.",
+    title: "7/24 Erişim.",
     desc: "WhatsApp üzerinden doğrudan benimle iletişim. Asistan yok, ekip yok. Her mesaj bana ulaşır.",
   },
   {
     num: "04",
-    title: "Haftalık revizyon.",
+    title: "Haftalık Revizyon.",
     desc: "İlerleme takibi ve program güncellemeleri haftalık yapılır. Duraksayan sürecin değil, seni ileriye taşıyan bir sistemin parçasısın.",
   },
   {
     num: "05",
-    title: "Kan tahlili dahil.",
+    title: "Kan Tahlili Dahil.",
     desc: "Antrenman ve beslenme programlarının ötesinde — kan değerlerini analiz ederek bütünsel bir strateji oluştururum.",
   },
   {
     num: "06",
-    title: "Hayatın uyar, sen değil.",
+    title: "Hayatın Uyar, Sen Değil.",
     desc: "Yoğun iş, vardiyalı çalışma, düzensiz uyku — program bunlara göre şekillenir. Mükemmel koşullar beklenmez.",
   },
 ];
@@ -85,15 +85,15 @@ export default function WhyMe() {
         >
           <div className="flex items-center gap-4 mb-8">
             <div style={{ width: "32px", height: "1px", background: "#555" }} />
-            <span className="section-label" style={{ color: "#999" }}>Neden farklı</span>
+            <span className="section-label" style={{ color: "#999" }}>Neden Farklı</span>
           </div>
           <h2
             className="font-display"
             style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", maxWidth: "780px", lineHeight: 1.1 }}
           >
-            Çoğu insan dene, bırak döngüsündedir.
+            Çoğu İnsan Dene, Bırak Döngüsündedir.
             <br />
-            <span style={{ color: "#5a5a5a" }}>Seninki farklı olabilir.</span>
+            <span style={{ color: "#5a5a5a" }}>Seninki Farklı Olabilir.</span>
           </h2>
         </motion.div>
       </div>

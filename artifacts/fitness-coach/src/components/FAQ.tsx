@@ -154,9 +154,9 @@ export default function FAQ() {
           className="font-display"
           style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1 }}
         >
-          Aklındaki sorular
+          Aklındaki Sorular
           <br />
-          <span style={{ color: "#5a5a5a" }}>burada yanıt buluyor.</span>
+          <span style={{ color: "#5a5a5a" }}>Burada Yanıt Buluyor.</span>
         </h2>
       </motion.div>
 

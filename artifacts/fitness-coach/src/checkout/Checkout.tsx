@@ -283,7 +283,7 @@ function StepReview() {
             <span className="block" style={{ fontSize: "0.62rem", letterSpacing: "0.18em", color: "#666", textTransform: "uppercase", marginBottom: "6px" }}>
               Ödeme Sağlayıcı
             </span>
-            <span style={{ fontSize: "0.85rem", color: "#aaa", letterSpacing: "0.05em" }}>iyzico</span>
+            <span style={{ fontSize: "0.85rem", color: "#aaa", letterSpacing: "0.05em" }}>PayTR</span>
           </div>
         </div>
       </div>
@@ -365,7 +365,7 @@ function SuccessScreen() {
         style={{ fontSize: "clamp(2.2rem, 7vw, 4rem)", fontWeight: 700, letterSpacing: "-0.035em", color: "#FAFAFA", lineHeight: 1.05 }}
         data-testid="success-greeting"
       >
-        Hoş geldin,
+        Hoş Geldin,
         <br />
         <span style={{ color: "#5a5a5a" }}>{fullName}.</span>
       </motion.h2>
@@ -415,7 +415,7 @@ function SuccessScreen() {
         }}
         data-testid="success-whatsapp-cta"
       >
-        Süreci başlat
+        Süreci Başlat
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
           <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" strokeWidth="1.6" />
         </svg>
@@ -430,7 +430,7 @@ function SuccessScreen() {
         style={{ fontSize: "0.7rem", letterSpacing: "0.2em", color: "#666", textTransform: "uppercase" }}
         data-testid="success-close"
       >
-        Siteye dön
+        Siteye Dön
       </motion.button>
     </div>
   );
@@ -479,14 +479,8 @@ function PackageSummary() {
       </div>
 
       <div className="mt-auto pt-10">
-        <div className="flex items-center gap-3 mb-3" style={{ color: "#777" }}>
-          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#fff" }} />
-          <span style={{ fontSize: "0.62rem", letterSpacing: "0.22em", textTransform: "uppercase", fontWeight: 600 }}>
-            Mayıs için kontenjan açık
-          </span>
-        </div>
         <p className="italic" style={{ fontSize: "0.72rem", color: "#666", lineHeight: 1.6 }}>
-          Son 30 günde 24 başvuru aldım.
+          Onayından sonra 24 saat içinde sana ulaşıyorum.
         </p>
       </div>
     </div>
@@ -642,7 +636,7 @@ function BottomCTA() {
     }
   };
 
-  const label = isLast ? `Öde ${pkg ? formatTRY(pkg.price) : ""} TL` : "Devam et";
+  const label = isLast ? `Öde ${pkg ? formatTRY(pkg.price) : ""} TL` : "Devam Et";
 
   return (
     <div
@@ -680,7 +674,7 @@ function BottomCTA() {
         )}
       </button>
       <p className="text-center mt-3 italic" style={{ fontSize: "0.66rem", color: "#666", letterSpacing: "0.04em" }}>
-        Ödeme iyzico altyapısı üzerinden güvenli şekilde alınır
+        Ödeme PayTR güvenli ödeme altyapısı üzerinden alınır.
       </p>
     </div>
   );
@@ -799,9 +793,9 @@ export default function CheckoutPanel() {
                         className="font-display mb-2"
                         style={{ fontSize: "clamp(1.7rem, 5vw, 2.4rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1 }}
                       >
-                        {state.step === "kimlik" && "Önce sen kimsin?"}
-                        {state.step === "iletisim" && "Sana nasıl ulaşırım?"}
-                        {state.step === "onay" && "Son bir bakış."}
+                        {state.step === "kimlik" && "Önce Sen Kimsin?"}
+                        {state.step === "iletisim" && "Sana Nasıl Ulaşırım?"}
+                        {state.step === "onay" && "Son Bir Bakış."}
                       </h2>
                       <p style={{ color: "#888", fontSize: "0.88rem", lineHeight: 1.6, marginBottom: "32px" }}>
                         {state.step === "kimlik" && "Faturanı düzgün hazırlamak için tam adın gerekli."}

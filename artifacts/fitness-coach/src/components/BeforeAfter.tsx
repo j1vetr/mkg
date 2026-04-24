@@ -176,9 +176,9 @@ export default function BeforeAfter() {
               className="font-display"
               style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1 }}
             >
-              Bunlar tesadüf değil.
+              Bunlar Tesadüf Değil.
               <br />
-              <span style={{ color: "#5a5a5a" }}>Bunlar sistem.</span>
+              <span style={{ color: "#5a5a5a" }}>Bunlar Sistem.</span>
             </h2>
             <div className="flex items-center gap-4">
               <span className="font-display" style={{ color: "#FAFAFA", fontSize: "2.4rem", fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 1 }}>
