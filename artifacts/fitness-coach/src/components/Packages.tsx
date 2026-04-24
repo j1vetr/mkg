@@ -132,7 +132,7 @@ function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; i
           </div>
         </div>
 
-        <div className="mb-2 flex items-baseline gap-2">
+        <div className="mb-8 flex items-baseline gap-2">
           <span
             className="font-display"
             style={{
@@ -146,14 +146,6 @@ function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; i
             {formattedPrice}
           </span>
           <span style={{ fontSize: "0.85rem", color: fgMuted, fontWeight: 500, letterSpacing: "0.06em" }}>TL</span>
-        </div>
-
-        <div className="mb-7 h-5">
-          {pkg.monthly && (
-            <span style={{ fontSize: "0.78rem", color: fgMuted, letterSpacing: "0.04em" }}>
-              ≈ Ayda {pkg.monthly} TL
-            </span>
-          )}
         </div>
 
         <p
@@ -283,27 +275,6 @@ export default function Packages() {
             <PackageCard key={pkg.id} pkg={pkg} i={i} inView={inView} />
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-8 md:mt-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
-          style={{ color: "#777" }}
-        >
-          <div className="flex items-center gap-3">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0">
-              <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1" />
-              <path d="M7 4V8M7 10V10.01" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-            </svg>
-            <span style={{ fontSize: "0.8rem", letterSpacing: "0.04em", lineHeight: 1.5 }}>
-              Tüm paketler aynı kalitede koçluk hizmetini içerir. Süre uzadıkça aylık maliyet düşer.
-            </span>
-          </div>
-          <span className="font-display shrink-0" style={{ fontSize: "0.7rem", letterSpacing: "0.18em", fontWeight: 500 }}>
-            KDV DAHİL
-          </span>
-        </motion.div>
       </div>
     </section>
   );

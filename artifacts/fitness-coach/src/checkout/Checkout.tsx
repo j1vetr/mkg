@@ -471,11 +471,6 @@ function PackageSummary() {
             TL
           </span>
         </div>
-        {pkg.monthly && (
-          <span className="block mt-2" style={{ fontSize: "0.72rem", color: "#777" }}>
-            ≈ ayda {pkg.monthly} TL
-          </span>
-        )}
       </div>
 
       <div className="mt-auto pt-10">
@@ -518,11 +513,6 @@ function CompactPackageBar() {
             TL
           </span>
         </span>
-        {pkg.monthly && (
-          <span className="block mt-1" style={{ fontSize: "0.62rem", color: "#777" }}>
-            ≈ ayda {pkg.monthly} TL
-          </span>
-        )}
       </div>
     </div>
   );

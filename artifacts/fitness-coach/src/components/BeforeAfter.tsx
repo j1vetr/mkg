@@ -171,24 +171,14 @@ export default function BeforeAfter() {
             <div style={{ width: "32px", height: "1px", background: "#555" }} />
             <span className="section-label" style={{ color: "#999" }}>Dönüşümler</span>
           </div>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <h2
-              className="font-display"
-              style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1 }}
-            >
-              Bunlar Tesadüf Değil.
-              <br />
-              <span style={{ color: "#5a5a5a" }}>Bunlar Sistem.</span>
-            </h2>
-            <div className="flex items-center gap-4">
-              <span className="font-display" style={{ color: "#FAFAFA", fontSize: "2.4rem", fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 1 }}>
-                {allImages.length}
-              </span>
-              <p style={{ color: "#A8A8A8", fontSize: "0.85rem", maxWidth: "240px", lineHeight: 1.6 }}>
-                Bu kişiler senden farklı değildi. Doğru sistemi buldular.
-              </p>
-            </div>
-          </div>
+          <h2
+            className="font-display"
+            style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1 }}
+          >
+            Bunlar Tesadüf Değil.
+            <br />
+            <span style={{ color: "#5a5a5a" }}>Bunlar Sistem.</span>
+          </h2>
         </motion.div>
       </div>
 
