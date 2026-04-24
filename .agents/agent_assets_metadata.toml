@@ -1,0 +1,20 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "8S2i3AKiwXDo5Y4FwxCmR"
+uri = "file://artifacts/fitness-coach/public/images/transform-1.png"
+type = "image"
+title = "Male muscle gain fitness transformation"
+
+[[generated]]
+id = "mQkvf6nXmRJM7PVDepOki"
+uri = "file://artifacts/fitness-coach/public/images/transform-2.png"
+type = "image"
+title = "Female fat loss fitness transformation"
+
+[[generated]]
+id = "eC7qyE12mhS4qWTVF4dpz"
+uri = "file://artifacts/fitness-coach/public/images/transform-3.png"
+type = "image"
+title = "Male fat loss fitness transformation"

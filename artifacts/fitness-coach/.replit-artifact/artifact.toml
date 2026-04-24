@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Fitness Koçluk"
+version = "1.0.0"
+id = "artifacts/fitness-coach"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20499
+
+[services.development]
+run = "pnpm --filter @workspace/fitness-coach run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/fitness-coach", "run", "build" ]
+publicDir = "artifacts/fitness-coach/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20499"
+BASE_PATH = "/"
