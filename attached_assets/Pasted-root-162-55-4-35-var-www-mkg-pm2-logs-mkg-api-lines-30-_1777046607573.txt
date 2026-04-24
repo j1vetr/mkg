@@ -1,0 +1,66 @@
+root@162-55-4-35:/var/www/mkg# pm2 logs mkg-api --lines 30
+
+>>>> In-memory PM2 is out-of-date, do:
+>>>> $ pm2 update
+In memory PM2 version: 6.0.11
+Local PM2 version: 6.0.14
+
+[TAILING] Tailing last 30 lines for [mkg-api] process (change the value with --lines option)
+/root/.pm2/logs/mkg-api-error-21.log last 30 lines:
+/root/.pm2/logs/mkg-api-out-21.log last 30 lines:
+21|mkg-api | {"level":30,"time":1777046573124,"pid":3538202,"hostname":"162-55-4-35.datahost.net.tr","port":5041,"msg":"Server listening"}
+21|mkg-api | {"level":50,"time":1777046573135,"pid":3538202,"hostname":"162-55-4-35.datahost.net.tr","err":{"type":"_DrizzleQueryError","message":"Failed query: select \"id\", \"username\", \"password_hash\", \"created_at\" from \"admin_users\" where \"admin_users\".\"username\" = $1 limit $2\nparams: toov-mhk,1: password authentication failed for user \"mkg_user\"","stack":"Error: Failed query: select \"id\", \"username\", \"password_hash\", \"created_at\" from \"admin_users\" where \"admin_users\".\"username\" = $1 limit $2\nparams: toov-mhk,1\n    at NodePgPreparedQuery.queryWithCache (file:///var/www/mkg/node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.18.0_pg@8.20.0/node_modules/src/pg-core/session.ts:73:11)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///var/www/mkg/node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.18.0_pg@8.20.0/node_modules/src/node-postgres/session.ts:154:19\n    at file:///var/www/mkg/artifacts/api-server/src/lib/adminAuth.ts:46:24\ncaused by: error: password authentication failed for user \"mkg_user\"\n    at file:///var/www/mkg/node_modules/.pnpm/pg-pool@3.13.0_pg@8.20.0/node_modules/pg-pool/index.js:45:11\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///var/www/mkg/node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.18.0_pg@8.20.0/node_modules/src/node-postgres/session.ts:161:13\n    at NodePgPreparedQuery.queryWithCache (file:///var/www/mkg/node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.18.0_pg@8.20.0/node_modules/src/pg-core/session.ts:71:12)\n    at file:///var/www/mkg/node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.18.0_pg@8.20.0/node_modules/src/node-postgres/session.ts:154:19\n    at file:///var/www/mkg/artifacts/api-server/src/lib/adminAuth.ts:46:24","query":"select \"id\", \"username\", \"password_hash\", \"created_at\" from \"admin_users\" where \"admin_users\".\"username\" = $1 limit $2","params":["toov-mhk",1]},"msg":"admin bootstrap failed"}
+21|mkg-api | {"level":50,"time":1777046573341,"pid":3538202,"hostname":"162-55-4-35.datahost.net.tr","err":{"type":"_DrizzleQueryError","message":"Failed query: select \"id\", \"slug\", \"duration\", \"blurb\", \"price_try\", \"highlight\", \"position\", \"active\", \"updated_at\" from \"packages\"\nparams: : password authentication failed for user \"mkg_user\"","stack":"Error: Failed query: select \"id\", \"slug\", \"duration\", \"blurb\", \"price_try\", \"highlight\", \"position\", \"active\", \"updated_at\" from \"packages\"\nparams: \n    at NodePgPreparedQuery.queryWithCache (file:///var/www/mkg/node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.18.0_pg@8.20.0/node_modules/src/pg-core/session.ts:73:11)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///var/www/mkg/node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.18.0_pg@8.20.0/node_modules/src/node-postgres/session.ts:154:19\n    at file:///var/www/mkg/artifacts/api-server/src/lib/seed.ts:48:24\ncaused by: error: password authentication failed for user \"mkg_user\"\n    at file:///var/www/mkg/node_modules/.pnpm/pg-pool@3.13.0_pg@8.20.0/node_modules/pg-pool/index.js:45:11\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///var/www/mkg/node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.18.0_pg@8.20.0/node_modules/src/node-postgres/session.ts:161:13\n    at NodePgPreparedQuery.queryWithCache (file:///var/www/mkg/node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.18.0_pg@8.20.0/node_modules/src/pg-core/session.ts:71:12)\n    at file:///var/www/mkg/node_modules/.pnpm/drizzle-orm@0.45.2_@types+pg@8.18.0_pg@8.20.0/node_modules/src/node-postgres/session.ts:154:19\n    at file:///var/www/mkg/artifacts/api-server/src/lib/seed.ts:48:24","query":"select \"id\", \"slug\", \"duration\", \"blurb\", \"price_try\", \"highlight\", \"position\", \"active\", \"updated_at\" from \"packages\"","params":[]},"msg":"seed packages failed"}
+
+^C
+root@162-55-4-35:/var/www/mkg# pm2 save
+[PM2] Saving current process list...
+
+>>>> In-memory PM2 is out-of-date, do:
+>>>> $ pm2 update
+In memory PM2 version: 6.0.11
+Local PM2 version: 6.0.14
+
+[PM2] Successfully saved in /root/.pm2/dump.pm2
+root@162-55-4-35:/var/www/mkg# sudo env PATH=$PATH pm2 startup systemd -u $USER --hp $HOME
+[PM2] Init System found: systemd
+Platform systemd
+Template
+[Unit]
+Description=PM2 process manager
+Documentation=https://pm2.keymetrics.io/
+After=network.target
+
+[Service]
+Type=forking
+User=root
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+Environment=PATH=/root/.nvm/versions/node/v22.22.2/bin:/root/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/root/android-sdk/cmdline-tools/latest/bin:/root/android-sdk/platform-tools:/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+Environment=PM2_HOME=/root/.pm2
+PIDFile=/root/.pm2/pm2.pid
+Restart=on-failure
+
+ExecStart=/root/.nvm/versions/node/v22.22.2/lib/node_modules/pm2/bin/pm2 resurrect
+ExecReload=/root/.nvm/versions/node/v22.22.2/lib/node_modules/pm2/bin/pm2 reload all
+ExecStop=/root/.nvm/versions/node/v22.22.2/lib/node_modules/pm2/bin/pm2 kill
+
+[Install]
+WantedBy=multi-user.target
+
+Target path
+/etc/systemd/system/pm2-root.service
+Command list
+[ 'systemctl enable pm2-root' ]
+[PM2] Writing init configuration in /etc/systemd/system/pm2-root.service
+[PM2] Making script booting at startup...
+[PM2] [-] Executing: systemctl enable pm2-root...
+[PM2] [v] Command successfully executed.
++---------------------------------------+
+[PM2] Freeze a process list on reboot via:
+$ pm2 save
+
+[PM2] Remove init script via:
+$ pm2 unstartup systemd
+root@162-55-4-35:/var/www/mkg#
