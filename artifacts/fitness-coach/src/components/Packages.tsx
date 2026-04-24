@@ -68,18 +68,18 @@ export default function Packages() {
           className="mb-16 md:mb-24"
         >
           <div className="flex items-center gap-4 mb-8">
-            <div style={{ width: "32px", height: "1px", background: "#333" }} />
-            <span className="section-label">Paketler</span>
+            <div style={{ width: "32px", height: "1px", background: "#555" }} />
+            <span className="section-label" style={{ color: "#999" }}>Paketler</span>
           </div>
           <h2
             className="font-display"
-            style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#F0F0F0", lineHeight: 1.1 }}
+            style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1 }}
           >
             Dönüşüme yatırım yapmanın
             <br />
-            <span style={{ color: "#444" }}>tek doğru zamanı şimdi.</span>
+            <span style={{ color: "#5a5a5a" }}>tek doğru zamanı şimdi.</span>
           </h2>
-          <p style={{ color: "#555", marginTop: "20px", maxWidth: "480px", lineHeight: 1.7, fontSize: "0.9rem" }}>
+          <p style={{ color: "#A8A8A8", marginTop: "24px", maxWidth: "520px", lineHeight: 1.7, fontSize: "0.95rem" }}>
             Sınırlı kontenjanla çalışıyorum. Her müşteriye gereken ilgiyi verebilmek için kapasitemi düşük tutuyorum.
           </p>
         </motion.div>
@@ -121,13 +121,13 @@ export default function Packages() {
                 </div>
 
                 {!pkg.isConsult && (
-                  <ul className="mb-10 space-y-3">
+                  <ul className="mb-10 space-y-3.5">
                     {features.map((f) => (
                       <li key={f} className="flex items-start gap-3">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="mt-1 shrink-0" style={{ color: "#555" }}>
-                          <rect x="0.5" y="0.5" width="11" height="11" stroke="currentColor" strokeWidth="0.8" />
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="mt-1 shrink-0" style={{ color: "#888" }}>
+                          <path d="M2 6L5 9L10 3" stroke="currentColor" strokeWidth="1.2" />
                         </svg>
-                        <span style={{ color: "#666", fontSize: "0.8rem", lineHeight: 1.5 }}>{f}</span>
+                        <span style={{ color: "#B0B0B0", fontSize: "0.85rem", lineHeight: 1.55 }}>{f}</span>
                       </li>
                     ))}
                   </ul>
@@ -135,7 +135,7 @@ export default function Packages() {
 
                 {pkg.isConsult && (
                   <div className="mb-10">
-                    <p style={{ color: "#555", fontSize: "0.85rem", lineHeight: 1.7 }}>
+                    <p style={{ color: "#B0B0B0", fontSize: "0.9rem", lineHeight: 1.7 }}>
                       Başlamadan önce sorularını yanıtlayabileceğin, sürecin sana uyup uymadığını anlayabileceğin 30 dakikalık birebir görüntülü görüşme.
                     </p>
                   </div>
@@ -147,21 +147,23 @@ export default function Packages() {
                   rel="noopener noreferrer"
                   className="block text-center text-sm font-medium uppercase tracking-widest py-4 transition-all duration-300"
                   style={{
-                    border: pkg.highlight ? "none" : "1px solid #1f1f1f",
+                    border: pkg.highlight ? "none" : "1px solid #2a2a2a",
                     background: pkg.highlight ? "#fff" : "transparent",
-                    color: pkg.highlight ? "#000" : "#555",
+                    color: pkg.highlight ? "#000" : "#E5E5E5",
                     letterSpacing: "0.12em",
                   }}
                   onMouseEnter={(e) => {
                     if (!pkg.highlight) {
-                      (e.currentTarget as HTMLElement).style.borderColor = "#555";
-                      (e.currentTarget as HTMLElement).style.color = "#ddd";
+                      (e.currentTarget as HTMLElement).style.borderColor = "#fff";
+                      (e.currentTarget as HTMLElement).style.background = "#fff";
+                      (e.currentTarget as HTMLElement).style.color = "#000";
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!pkg.highlight) {
-                      (e.currentTarget as HTMLElement).style.borderColor = "#1f1f1f";
-                      (e.currentTarget as HTMLElement).style.color = "#555";
+                      (e.currentTarget as HTMLElement).style.borderColor = "#2a2a2a";
+                      (e.currentTarget as HTMLElement).style.background = "transparent";
+                      (e.currentTarget as HTMLElement).style.color = "#E5E5E5";
                     }
                   }}
                   data-testid={`package-cta-${pkg.id}`}

@@ -79,33 +79,33 @@ function FAQItem({ item, index }: { item: typeof faqs[0]; index: number }) {
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.04 }}
-      style={{ borderBottom: "1px solid #161616" }}
+      style={{ borderBottom: "1px solid #1f1f1f" }}
     >
       <button
-        className="w-full flex items-start justify-between gap-6 py-6 text-left"
+        className="w-full flex items-start justify-between gap-6 py-7 text-left group"
         onClick={() => setOpen(!open)}
         data-testid={`faq-item-${index}`}
         aria-expanded={open}
       >
         <span
-          className="font-display"
-          style={{ color: open ? "#F0F0F0" : "#888", fontSize: "clamp(0.9rem, 2vw, 1.05rem)", fontWeight: 500, lineHeight: 1.4, transition: "color 0.2s" }}
+          className="font-display group-hover:text-white"
+          style={{ color: open ? "#FAFAFA" : "#D5D5D5", fontSize: "clamp(0.95rem, 2vw, 1.1rem)", fontWeight: 500, lineHeight: 1.4, transition: "color 0.2s" }}
         >
           {item.q}
         </span>
         <span
           className="shrink-0 mt-1"
           style={{
-            width: "18px",
-            height: "18px",
-            border: "1px solid #2a2a2a",
+            width: "22px",
+            height: "22px",
+            border: "1px solid #3a3a3a",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            color: "#555",
+            color: open ? "#fff" : "#888",
             transform: open ? "rotate(45deg)" : "rotate(0deg)",
-            transition: "transform 0.3s ease, border-color 0.2s",
-            borderColor: open ? "#555" : "#2a2a2a",
+            transition: "transform 0.4s ease, border-color 0.2s, color 0.2s",
+            borderColor: open ? "#fff" : "#3a3a3a",
           }}
         >
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -120,10 +120,10 @@ function FAQItem({ item, index }: { item: typeof faqs[0]; index: number }) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             style={{ overflow: "hidden" }}
           >
-            <p style={{ color: "#666", fontSize: "0.9rem", lineHeight: 1.75, paddingBottom: "24px", maxWidth: "680px" }}>
+            <p style={{ color: "#A8A8A8", fontSize: "0.95rem", lineHeight: 1.75, paddingBottom: "28px", maxWidth: "720px" }}>
               {item.a}
             </p>
           </motion.div>
@@ -147,20 +147,20 @@ export default function FAQ() {
         className="mb-14 md:mb-20"
       >
         <div className="flex items-center gap-4 mb-8">
-          <div style={{ width: "32px", height: "1px", background: "#333" }} />
-          <span className="section-label">Sıkça Sorulan Sorular</span>
+          <div style={{ width: "32px", height: "1px", background: "#555" }} />
+          <span className="section-label" style={{ color: "#999" }}>Sıkça Sorulan Sorular</span>
         </div>
         <h2
           className="font-display"
-          style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#F0F0F0", lineHeight: 1.1 }}
+          style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1 }}
         >
           Aklındaki sorular
           <br />
-          <span style={{ color: "#444" }}>burada yanıt buluyor.</span>
+          <span style={{ color: "#5a5a5a" }}>burada yanıt buluyor.</span>
         </h2>
       </motion.div>
 
-      <div style={{ borderTop: "1px solid #161616" }}>
+      <div style={{ borderTop: "1px solid #1f1f1f" }}>
         {faqs.map((item, i) => (
           <FAQItem key={i} item={item} index={i} />
         ))}

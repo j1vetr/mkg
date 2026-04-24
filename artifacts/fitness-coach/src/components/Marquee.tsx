@@ -13,22 +13,29 @@ export default function Marquee() {
   return (
     <div
       style={{
-        borderTop: "1px solid #111",
-        borderBottom: "1px solid #111",
-        padding: "18px 0",
+        borderTop: "1px solid #1a1a1a",
+        borderBottom: "1px solid #1a1a1a",
+        padding: "26px 0",
         overflow: "hidden",
         background: "#060606",
       }}
     >
       <div className="animate-marquee flex gap-16 w-max">
-        {[...items, ...items].map((item, i) => (
+        {[...items, ...items, ...items].map((item, i) => (
           <span
             key={i}
             className="font-display shrink-0 flex items-center gap-16"
-            style={{ color: "#1e1e1e", fontSize: "0.7rem", letterSpacing: "0.2em", fontWeight: 600, textTransform: "uppercase", whiteSpace: "nowrap" }}
+            style={{
+              color: "#888",
+              fontSize: "0.8rem",
+              letterSpacing: "0.22em",
+              fontWeight: 500,
+              textTransform: "uppercase",
+              whiteSpace: "nowrap",
+            }}
           >
             {item}
-            <span style={{ color: "#222", fontSize: "0.4rem" }}>◆</span>
+            <span style={{ color: "#444", fontSize: "0.5rem" }}>◆</span>
           </span>
         ))}
       </div>

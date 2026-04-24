@@ -126,11 +126,11 @@
 
 .section-label {
   font-family: 'Inter', sans-serif;
-  font-size: 0.6875rem;
+  font-size: 0.7rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #666;
+  color: #999;
 }
 
 .divider-line {

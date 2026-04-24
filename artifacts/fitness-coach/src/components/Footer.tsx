@@ -8,7 +8,7 @@ export default function Footer() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <footer style={{ background: "#060606", borderTop: "1px solid #111" }}>
+    <footer style={{ background: "#060606", borderTop: "1px solid #1a1a1a" }}>
       <div className="px-6 md:px-10 max-w-screen-xl mx-auto py-28 md:py-40">
         <motion.div
           ref={ref}
@@ -18,8 +18,8 @@ export default function Footer() {
           className="flex flex-col items-start gap-12"
         >
           <div className="flex items-center gap-4">
-            <div style={{ width: "32px", height: "1px", background: "#333" }} />
-            <span className="section-label">Son adım</span>
+            <div style={{ width: "32px", height: "1px", background: "#555" }} />
+            <span className="section-label" style={{ color: "#999" }}>Son adım</span>
           </div>
 
           <h2
@@ -28,17 +28,17 @@ export default function Footer() {
               fontSize: "clamp(2.5rem, 7vw, 6rem)",
               fontWeight: 700,
               letterSpacing: "-0.04em",
-              color: "#F0F0F0",
+              color: "#FAFAFA",
               lineHeight: 1,
-              maxWidth: "800px",
+              maxWidth: "900px",
             }}
           >
             Karar verdim.
             <br />
-            <span style={{ color: "#333" }}>Başlamak istiyorum.</span>
+            <span style={{ color: "#5a5a5a" }}>Başlamak istiyorum.</span>
           </h2>
 
-          <p style={{ color: "#555", fontSize: "0.9rem", maxWidth: "420px", lineHeight: 1.7 }}>
+          <p style={{ color: "#A8A8A8", fontSize: "0.95rem", maxWidth: "460px", lineHeight: 1.7 }}>
             Mesajınızı bekliyorum. Süreci başlatmak için WhatsApp üzerinden iletişime geçebilirsiniz.
           </p>
 
@@ -73,10 +73,10 @@ export default function Footer() {
         </motion.div>
       </div>
 
-      <div style={{ borderTop: "1px solid #111" }} className="px-6 md:px-10 max-w-screen-xl mx-auto py-8">
+      <div style={{ borderTop: "1px solid #1a1a1a" }} className="px-6 md:px-10 max-w-screen-xl mx-auto py-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <span className="font-display font-bold text-sm" style={{ color: "#2a2a2a" }}>KOÇ.</span>
-          <span style={{ color: "#2a2a2a", fontSize: "0.7rem", letterSpacing: "0.1em" }}>
+          <span className="font-display font-bold text-sm" style={{ color: "#888" }}>KOÇ.</span>
+          <span style={{ color: "#777", fontSize: "0.7rem", letterSpacing: "0.12em" }}>
             © {new Date().getFullYear()} — Tüm hakları saklıdır.
           </span>
         </div>
