@@ -486,7 +486,7 @@ function SuccessScreen() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
         className="font-display mb-6"
-        style={{ fontSize: "clamp(2.2rem, 7vw, 4rem)", fontWeight: 700, letterSpacing: "-0.035em", color: "#FAFAFA", lineHeight: 1.05 }}
+        style={{ fontSize: "clamp(2rem, 4.5vw, 3rem)", fontWeight: 700, letterSpacing: "-0.035em", color: "#FAFAFA", lineHeight: 1.05 }}
         data-testid="success-greeting"
       >
         Hoş Geldin,
@@ -574,7 +574,7 @@ function PackageSummary() {
       </span>
       <h3
         className="font-display mb-1"
-        style={{ fontSize: "clamp(1.6rem, 3vw, 2rem)", fontWeight: 700, letterSpacing: "-0.025em", color: "#FAFAFA", lineHeight: 1 }}
+        style={{ fontSize: "clamp(1.4rem, 2.2vw, 1.7rem)", fontWeight: 700, letterSpacing: "-0.025em", color: "#FAFAFA", lineHeight: 1 }}
       >
         {pkg.duration}
       </h3>
@@ -901,7 +901,7 @@ export default function CheckoutPanel() {
                     >
                       <h2
                         className="font-display mb-2"
-                        style={{ fontSize: "clamp(1.7rem, 5vw, 2.4rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1 }}
+                        style={{ fontSize: "clamp(1.5rem, 3vw, 1.9rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1 }}
                       >
                         {state.step === "kimlik" && "Önce Sen Kimsin?"}
                         {state.step === "iletisim" && "Sana Nasıl Ulaşırım?"}

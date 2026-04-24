@@ -99,7 +99,7 @@ function PackageCard({ pkg, i, inView }: { pkg: PackageView; i: number; inView: 
           <span
             className="font-display"
             style={{
-              fontSize: "clamp(2.6rem, 5.2vw, 4.4rem)",
+              fontSize: "clamp(2.4rem, 3.6vw, 3rem)",
               fontWeight: 700,
               letterSpacing: "-0.045em",
               lineHeight: 0.9,
@@ -243,7 +243,7 @@ export default function Packages() {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
             <h2
               className="font-display mx-auto md:mx-0"
-              style={{ fontSize: "clamp(2.1rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1, maxWidth: "780px" }}
+              style={{ fontSize: "clamp(2rem, 3.6vw, 3rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1, maxWidth: "780px" }}
             >
               Dönüşüme Yatırım Yapmanın
               <br />

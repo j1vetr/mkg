@@ -96,7 +96,7 @@ export default function LegalPage({ slug }: { slug: string }) {
             tabIndex={-1}
             className="font-display outline-none"
             style={{
-              fontSize: "clamp(2rem, 5.5vw, 3.4rem)",
+              fontSize: "clamp(2rem, 3.6vw, 2.6rem)",
               fontWeight: 700,
               letterSpacing: "-0.03em",
               lineHeight: 1.1,
@@ -140,7 +140,7 @@ export default function LegalPage({ slug }: { slug: string }) {
                 <h2
                   className="font-display mb-5"
                   style={{
-                    fontSize: "clamp(1.15rem, 2vw, 1.4rem)",
+                    fontSize: "clamp(1.05rem, 1.5vw, 1.2rem)",
                     fontWeight: 600,
                     letterSpacing: "-0.015em",
                     color: "#FAFAFA",

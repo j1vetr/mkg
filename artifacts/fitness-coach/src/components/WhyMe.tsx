@@ -57,7 +57,7 @@ function ReasonCard({ r, i }: { r: typeof reasons[0]; i: number }) {
         <div>
           <h3
             className="font-display mb-4 transition-colors duration-300"
-            style={{ color: "#FAFAFA", fontSize: "clamp(1.2rem, 2.6vw, 1.6rem)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.2 }}
+            style={{ color: "#FAFAFA", fontSize: "clamp(1.2rem, 1.8vw, 1.3rem)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.2 }}
           >
             {r.title}
           </h3>
@@ -89,7 +89,7 @@ export default function WhyMe() {
           </div>
           <h2
             className="font-display"
-            style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", maxWidth: "780px", lineHeight: 1.1 }}
+            style={{ fontSize: "clamp(2rem, 3.6vw, 3rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", maxWidth: "780px", lineHeight: 1.1 }}
           >
             Çoğu İnsan Dene, Bırak Döngüsündedir.
             <br />

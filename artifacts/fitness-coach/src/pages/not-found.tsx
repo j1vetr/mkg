@@ -31,7 +31,7 @@ export default function NotFound() {
         transition={{ duration: 0.9, ease: EASE, delay: 0.08 }}
         className="font-display text-center"
         style={{
-          fontSize: "clamp(4.5rem, 18vw, 10rem)",
+          fontSize: "clamp(4.5rem, 12vw, 7rem)",
           fontWeight: 700,
           letterSpacing: "-0.05em",
           lineHeight: 0.92,
@@ -47,7 +47,7 @@ export default function NotFound() {
         transition={{ duration: 0.9, ease: EASE, delay: 0.18 }}
         className="font-display text-center"
         style={{
-          fontSize: "clamp(1.4rem, 4vw, 2.1rem)",
+          fontSize: "clamp(1.3rem, 2.5vw, 1.6rem)",
           fontWeight: 600,
           letterSpacing: "-0.02em",
           marginTop: "8px",

@@ -232,7 +232,7 @@ export default function BeforeAfter() {
           </div>
           <h2
             className="font-display"
-            style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1 }}
+            style={{ fontSize: "clamp(2rem, 3.6vw, 3rem)", fontWeight: 700, letterSpacing: "-0.03em", color: "#FAFAFA", lineHeight: 1.1 }}
           >
             Bunlar Tesadüf Değil.
             <br />
