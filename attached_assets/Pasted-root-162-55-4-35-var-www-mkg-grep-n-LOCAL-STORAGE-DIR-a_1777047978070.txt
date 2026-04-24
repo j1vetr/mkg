@@ -1,0 +1,87 @@
+root@162-55-4-35:/var/www/mkg# grep -n "LOCAL_STORAGE_DIR" artifacts/api-server/src/lib/imageStorage.ts
+7:const LOCAL_DIR = process.env.LOCAL_STORAGE_DIR;
+26:  if (!LOCAL_DIR) throw new Error("LOCAL_STORAGE_DIR not set");
+root@162-55-4-35:/var/www/mkg# pnpm install
+Scope: all 9 workspace projects
+Lockfile is up to date, resolution step is skipped
+Already up to date
+. preinstall$ sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&2; exit 1 ;; esac'
+└─ Done in 15ms
+╭ Warning ───────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                            │
+│   Ignored build scripts: sharp@0.34.5.                                                     │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts.   │
+│                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────╯
+Done in 1.3s using pnpm v10.33.2
+root@162-55-4-35:/var/www/mkg# pnpm --filter @workspace/api-server run build
+
+> @workspace/api-server@0.0.0 build /var/www/mkg/artifacts/api-server
+> node ./build.mjs
+
+
+  dist/index.mjs                       2.2mb ⚠️
+  dist/pino-worker.mjs               153.4kb
+  dist/pino-file.mjs                 142.0kb
+  dist/pino-pretty.mjs               114.6kb
+  dist/thread-stream-worker.mjs        7.3kb
+  dist/index.mjs.map                   3.8mb
+  dist/pino-worker.mjs.map           256.9kb
+  dist/pino-file.mjs.map             229.0kb
+  dist/pino-pretty.mjs.map           203.9kb
+  dist/thread-stream-worker.mjs.map   12.0kb
+
+⚡ Done in 234ms
+root@162-55-4-35:/var/www/mkg# grep "LOCAL_STORAGE_DIR" /var/www/mkg/ecosystem.config.cjs
+root@162-55-4-35:/var/www/mkg# pm2 restart mkg-api --update-env
+
+>>>> In-memory PM2 is out-of-date, do:
+>>>> $ pm2 update
+In memory PM2 version: 6.0.11
+Local PM2 version: 6.0.14
+
+[PM2] Applying action restartProcessId on app [mkg-api](ids: [ 22 ])
+[PM2] [mkg-api](22) ✓
+┌────┬──────────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name                     │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼──────────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 9  │ adegloba                 │ default     │ 1.0.0   │ cluster │ 1040     │ 9D     │ 0    │ online    │ 0%       │ 50.4mb   │ root     │ disabled │
+│ 5  │ besindegerim             │ default     │ 1.0.0   │ cluster │ 998      │ 9D     │ 0    │ online    │ 0%       │ 55.2mb   │ root     │ disabled │
+│ 15 │ capari                   │ default     │ 1.0.0   │ cluster │ 1108     │ 9D     │ 0    │ online    │ 0%       │ 52.2mb   │ root     │ disabled │
+│ 17 │ capital-lashing          │ default     │ 1.0.0   │ fork    │ 1126     │ 9D     │ 0    │ online    │ 0%       │ 46.1mb   │ root     │ disabled │
+│ 20 │ carsi-api                │ default     │ 0.0.0   │ cluster │ 1723599  │ 20h    │ 2    │ online    │ 0%       │ 98.5mb   │ root     │ disabled │
+│ 8  │ emerald                  │ default     │ N/A     │ fork    │ 1039     │ 9D     │ 0    │ online    │ 0%       │ 33.2mb   │ root     │ disabled │
+│ 6  │ escapetable              │ default     │ 1.0.0   │ cluster │ 1000     │ 9D     │ 0    │ online    │ 0%       │ 47.8mb   │ root     │ disabled │
+│ 13 │ gokalaf                  │ default     │ 1.0.0   │ fork    │ 676461   │ 5D     │ 1    │ online    │ 0%       │ 107.3mb  │ root     │ disabled │
+│ 16 │ hank                     │ default     │ 1.0.0   │ fork    │ 3212105  │ 3h     │ 3    │ online    │ 0%       │ 158.1mb  │ root     │ disabled │
+│ 10 │ kimdinliyor              │ default     │ 1.0.0   │ cluster │ 1046     │ 9D     │ 0    │ online    │ 0%       │ 53.4mb   │ root     │ disabled │
+│ 12 │ lacivert-teknoloji       │ default     │ 1.0.0   │ cluster │ 1088     │ 9D     │ 0    │ online    │ 0%       │ 46.5mb   │ root     │ disabled │
+│ 2  │ maison-nomade-contact    │ default     │ N/A     │ fork    │ 976      │ 9D     │ 0    │ online    │ 0%       │ 32.6mb   │ root     │ disabled │
+│ 22 │ mkg-api                  │ default     │ 0.0.0   │ fork    │ 3573071  │ 0s     │ 1    │ online    │ 0%       │ 20.4mb   │ root     │ disabled │
+│ 4  │ nasiloldu                │ default     │ N/A     │ fork    │ 999      │ 9D     │ 0    │ online    │ 0%       │ 83.9mb   │ root     │ disabled │
+│ 18 │ neon-api                 │ default     │ 0.0.0   │ fork    │ 1137     │ 9D     │ 0    │ online    │ 0%       │ 41.8mb   │ root     │ disabled │
+│ 14 │ ozelilgi                 │ default     │ 1.0.0   │ fork    │ 1100     │ 9D     │ 0    │ online    │ 0%       │ 48.9mb   │ root     │ disabled │
+│ 3  │ postakod                 │ default     │ 1.0.0   │ fork    │ 983      │ 9D     │ 0    │ online    │ 0%       │ 77.9mb   │ root     │ disabled │
+│ 7  │ toov                     │ default     │ 1.0.0   │ cluster │ 1030     │ 9D     │ 0    │ online    │ 0%       │ 47.6mb   │ root     │ disabled │
+│ 11 │ tutturduk                │ default     │ 1.0.0   │ fork    │ 1082     │ 9D     │ 0    │ online    │ 0%       │ 73.9mb   │ root     │ disabled │
+│ 0  │ watermarktoo-backend     │ default     │ 1.0.0   │ cluster │ 969      │ 9D     │ 0    │ online    │ 0%       │ 64.6mb   │ root     │ disabled │
+│ 1  │ yosun-restaurant         │ default     │ 1.0.0   │ fork    │ 3573039  │ 0s     │ 865… │ online    │ 0%       │ 53.6mb   │ root     │ disabled │
+└────┴──────────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+root@162-55-4-35:/var/www/mkg# pm2 env 0 | grep LOCAL_STORAGE_DIR
+root@162-55-4-35:/var/www/mkg# pm2 logs mkg-api --lines 20
+
+>>>> In-memory PM2 is out-of-date, do:
+>>>> $ pm2 update
+In memory PM2 version: 6.0.11
+Local PM2 version: 6.0.14
+
+[TAILING] Tailing last 20 lines for [mkg-api] process (change the value with --lines option)
+/root/.pm2/logs/mkg-api-error-22.log last 20 lines:
+/root/.pm2/logs/mkg-api-out-22.log last 20 lines:
+22|mkg-api |    at Layer.handleRequest (file:///var/www/mkg/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)\n    at next (file:///var/www/mkg/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:157:13)\n    at done (file:///var/www/mkg/node_modules/.pnpm/multer@2.1.1/node_modules/multer/lib/make-middleware.js:69:7)\n    at indicateDone (file:///var/www/mkg/node_modules/.pnpm/multer@2.1.1/node_modules/multer/lib/make-middleware.js:73:68)\n    at Multipart.<anonymous> (file:///var/www/mkg/node_modules/.pnpm/multer@2.1.1/node_modules/multer/lib/make-middleware.js:243:7)\n    at Multipart.emit (node:events:519:28)\n    at emitCloseNT (node:internal/streams/destroy:148:10)"},"msg":"image optimize failed"}
+22|mkg-api | {"level":30,"time":1777047848746,"pid":3544076,"hostname":"162-55-4-35.datahost.net.tr","req":{"id":118,"method":"POST","url":"/api/admin/before-after"},"res":{"statusCode":500},"err":{"type":"Error","message":"failed with status code 500","stack":"Error: failed with status code 500\n    at onResFinished (file:///var/www/mkg/node_modules/.pnpm/pino-http@10.5.0/node_modules/pino-http/logger.js:115:39)\n    at ServerResponse.onResponseComplete (file:///var/www/mkg/node_modules/.pnpm/pino-http@10.5.0/node_modules/pino-http/logger.js:178:14)\n    at ServerResponse.emit (node:events:531:35)\n    at onFinish (node:_http_outgoing:1084:10)\n    at callback (node:internal/streams/writable:766:21)\n    at afterWrite (node:internal/streams/writable:710:5)\n    at afterWriteTick (node:internal/streams/writable:696:10)\n    at processTicksAndRejections (node:internal/process/task_queues:88:21)"},"responseTime":3,"msg":"request errored"}
+22|mkg-api | {"level":50,"time":1777047848748,"pid":3544076,"hostname":"162-55-4-35.datahost.net.tr","req":{"id":119,"method":"POST","url":"/api/admin/before-after"},"err":{"type":"Error","message":"PRIVATE_OBJECT_DIR not set","stack":"Error: PRIVATE_OBJECT_DIR not set\n    at getPrivateDir (file:///var/www/mkg/artifacts/api-server/src/lib/imageStorage.ts:16:19)\n    at optimizeAndUpload (file:///var/www/mkg/artifacts/api-server/src/lib/imageStorage.ts:33:22)\n    at file:///var/www/mkg/artifacts/api-server/src/routes/media.ts:74:25\n    at Layer.handleRequest (file:///var/www/mkg/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)\n    at next (file:///var/www/mkg/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:157:13)\n    at done (file:///var/www/mkg/node_modules/.pnpm/multer@2.1.1/node_modules/multer/lib/make-middleware.js:69:7)\n    at indicateDone (file:///var/www/mkg/node_modules/.pnpm/multer@2.1.1/node_modules/multer/lib/make-middleware.js:73:68)\n    at Multipart.<anonymous> (file:///var/www/mkg/node_modules/.pnpm/multer@2.1.1/node_modules/multer/lib/make-middleware.js:243:7)\n    at Multipart.emit (node:events:519:28)\n    at emitCloseNT (node:internal/streams/destroy:148:10)"},"msg":"image optimize failed"}
+22|mkg-api | {"level":30,"time":1777047848748,"pid":3544076,"hostname":"162-55-4-35.datahost.net.tr","req":{"id":119,"method":"POST","url":"/api/admin/before-after"},"res":{"statusCode":500},"err":{"type":"Error","message":"failed with status code 500","stack":"Error: failed with status code 500\n    at onResFinished (file:///var/www/mkg/node_modules/.pnpm/pino-http@10.5.0/node_modules/pino-http/logger.js:115:39)\n    at ServerResponse.onResponseComplete (file:///var/www/mkg/node_modules/.pnpm/pino-http@10.5.0/node_modules/pino-http/logger.js:178:14)\n    at ServerResponse.emit (node:events:531:35)\n    at onFinish (node:_http_outgoing:1084:10)\n    at callback (node:internal/streams/writable:766:21)\n    at afterWrite (node:internal/streams/writable:710:5)\n    at afterWriteTick (node:internal/streams/writable:696:10)\n    at processTicksAndRejections (node:internal/process/task_queues:88:21)"},"responseTime":2,"msg":"request errored"}
+22|mkg-api | {"level":30,"time":1777047955057,"pid":3573071,"hostname":"162-55-4-35.datahost.net.tr","port":5041,"msg":"Server listening"}
+
+
