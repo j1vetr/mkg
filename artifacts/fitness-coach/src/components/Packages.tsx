@@ -1,7 +1,19 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { useCheckout } from "@/checkout/CheckoutContext";
+import type { PackageId } from "@/checkout/data";
 
-const packages = [
+const packages: Array<{
+  id: PackageId;
+  num: string;
+  duration: string;
+  price: number;
+  monthly: string | null;
+  highlight: boolean;
+  tag: string | null;
+  isConsult: boolean;
+  blurb: string;
+}> = [
   {
     id: "3-ay",
     num: "01",
@@ -58,10 +70,9 @@ const features = [
   "Haftalık Form Kontrolü & Revizyon",
 ];
 
-const WA_LINK = "https://wa.me/905XXXXXXXXX";
-
 function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; inView: boolean }) {
   const [hover, setHover] = useState(false);
+  const { open } = useCheckout();
   const dark = !pkg.highlight;
   const fg = dark ? "#FAFAFA" : "#0a0a0a";
   const fgMuted = dark ? "rgba(250,250,250,0.55)" : "rgba(10,10,10,0.55)";
@@ -196,11 +207,9 @@ function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; i
           </div>
         )}
 
-        <a
-          href={WA_LINK}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group/cta flex items-center justify-between transition-all duration-500"
+        <button
+          onClick={() => open(pkg.id)}
+          className="group/cta flex items-center justify-between transition-all duration-500 w-full text-left"
           style={{
             paddingTop: "20px",
             paddingBottom: "4px",
@@ -228,7 +237,7 @@ function PackageCard({ pkg, i, inView }: { pkg: typeof packages[0]; i: number; i
               <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" strokeWidth="1.4" />
             </svg>
           </span>
-        </a>
+        </button>
       </div>
     </motion.div>
   );
