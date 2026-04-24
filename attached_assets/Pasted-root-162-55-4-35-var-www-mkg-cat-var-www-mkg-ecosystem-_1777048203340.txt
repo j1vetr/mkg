@@ -1,0 +1,141 @@
+root@162-55-4-35:/var/www/mkg# cat /var/www/mkg/ecosystem.config.cjs
+module.exports = {
+  apps: [
+    {
+      name: "mkg-api",
+      cwd: "/var/www/mkg/artifacts/api-server",
+      script: "./dist/index.mjs",
+      interpreter: "node",
+      instances: 1,
+      exec_mode: "fork",
+      max_memory_restart: "400M",
+      env: {
+        NODE_ENV: "production",
+        PORT: "5041",
+        DATABASE_URL: "postgresql://mkg_user:MkGTooV1453XQY@127.0.0.1:5432/mkg",
+        LOCAL_STORAGE_DIR: "/var/www/mkg-storage",
+        SESSION_SECRET: "4f9a2b8c3d7e1f0a9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a",
+        LOG_LEVEL: "info"
+      }
+    }
+  ]
+};
+root@162-55-4-35:/var/www/mkg# pm2 delete mkg-api
+
+>>>> In-memory PM2 is out-of-date, do:
+>>>> $ pm2 update
+In memory PM2 version: 6.0.11
+Local PM2 version: 6.0.14
+
+[PM2] Applying action deleteProcessId on app [mkg-api](ids: [ 22 ])
+[PM2] [mkg-api](22) ✓
+┌────┬──────────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name                     │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼──────────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 9  │ adegloba                 │ default     │ 1.0.0   │ cluster │ 1040     │ 9D     │ 0    │ online    │ 0%       │ 51.2mb   │ root     │ disabled │
+│ 5  │ besindegerim             │ default     │ 1.0.0   │ cluster │ 998      │ 9D     │ 0    │ online    │ 0%       │ 55.3mb   │ root     │ disabled │
+│ 15 │ capari                   │ default     │ 1.0.0   │ cluster │ 1108     │ 9D     │ 0    │ online    │ 0%       │ 52.3mb   │ root     │ disabled │
+│ 17 │ capital-lashing          │ default     │ 1.0.0   │ fork    │ 1126     │ 9D     │ 0    │ online    │ 0%       │ 46.2mb   │ root     │ disabled │
+│ 20 │ carsi-api                │ default     │ 0.0.0   │ cluster │ 1723599  │ 20h    │ 2    │ online    │ 0%       │ 98.5mb   │ root     │ disabled │
+│ 8  │ emerald                  │ default     │ N/A     │ fork    │ 1039     │ 9D     │ 0    │ online    │ 0%       │ 32.3mb   │ root     │ disabled │
+│ 6  │ escapetable              │ default     │ 1.0.0   │ cluster │ 1000     │ 9D     │ 0    │ online    │ 0%       │ 47.8mb   │ root     │ disabled │
+│ 13 │ gokalaf                  │ default     │ 1.0.0   │ fork    │ 676461   │ 5D     │ 1    │ online    │ 0%       │ 107.5mb  │ root     │ disabled │
+│ 16 │ hank                     │ default     │ 1.0.0   │ fork    │ 3212105  │ 4h     │ 3    │ online    │ 0%       │ 158.2mb  │ root     │ disabled │
+│ 10 │ kimdinliyor              │ default     │ 1.0.0   │ cluster │ 1046     │ 9D     │ 0    │ online    │ 0%       │ 53.8mb   │ root     │ disabled │
+│ 12 │ lacivert-teknoloji       │ default     │ 1.0.0   │ cluster │ 1088     │ 9D     │ 0    │ online    │ 0%       │ 46.4mb   │ root     │ disabled │
+│ 2  │ maison-nomade-contact    │ default     │ N/A     │ fork    │ 976      │ 9D     │ 0    │ online    │ 0%       │ 32.5mb   │ root     │ disabled │
+│ 4  │ nasiloldu                │ default     │ N/A     │ fork    │ 999      │ 9D     │ 0    │ online    │ 0%       │ 83.9mb   │ root     │ disabled │
+│ 18 │ neon-api                 │ default     │ 0.0.0   │ fork    │ 1137     │ 9D     │ 0    │ online    │ 0%       │ 41.1mb   │ root     │ disabled │
+│ 14 │ ozelilgi                 │ default     │ 1.0.0   │ fork    │ 1100     │ 9D     │ 0    │ online    │ 0%       │ 48.7mb   │ root     │ disabled │
+│ 3  │ postakod                 │ default     │ 1.0.0   │ fork    │ 983      │ 9D     │ 0    │ online    │ 8.3%     │ 81.7mb   │ root     │ disabled │
+│ 7  │ toov                     │ default     │ 1.0.0   │ cluster │ 1030     │ 9D     │ 0    │ online    │ 0%       │ 47.1mb   │ root     │ disabled │
+│ 11 │ tutturduk                │ default     │ 1.0.0   │ fork    │ 1082     │ 9D     │ 0    │ online    │ 0%       │ 75.0mb   │ root     │ disabled │
+│ 0  │ watermarktoo-backend     │ default     │ 1.0.0   │ cluster │ 969      │ 9D     │ 0    │ online    │ 0%       │ 65.1mb   │ root     │ disabled │
+│ 1  │ yosun-restaurant         │ default     │ 1.0.0   │ fork    │ 3578577  │ 0s     │ 865… │ online    │ 0%       │ 53.6mb   │ root     │ disabled │
+└────┴──────────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+root@162-55-4-35:/var/www/mkg# pm2 start /var/www/mkg/ecosystem.config.cjs --only mkg-api
+
+>>>> In-memory PM2 is out-of-date, do:
+>>>> $ pm2 update
+In memory PM2 version: 6.0.11
+Local PM2 version: 6.0.14
+
+[PM2][WARN] Applications mkg-api not running, starting...
+[PM2] App [mkg-api] launched (1 instances)
+┌────┬──────────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name                     │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼──────────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 9  │ adegloba                 │ default     │ 1.0.0   │ cluster │ 1040     │ 9D     │ 0    │ online    │ 0%       │ 50.2mb   │ root     │ disabled │
+│ 5  │ besindegerim             │ default     │ 1.0.0   │ cluster │ 998      │ 9D     │ 0    │ online    │ 0%       │ 55.3mb   │ root     │ disabled │
+│ 15 │ capari                   │ default     │ 1.0.0   │ cluster │ 1108     │ 9D     │ 0    │ online    │ 0%       │ 52.6mb   │ root     │ disabled │
+│ 17 │ capital-lashing          │ default     │ 1.0.0   │ fork    │ 1126     │ 9D     │ 0    │ online    │ 0%       │ 46.5mb   │ root     │ disabled │
+│ 20 │ carsi-api                │ default     │ 0.0.0   │ cluster │ 1723599  │ 20h    │ 2    │ online    │ 0%       │ 98.9mb   │ root     │ disabled │
+│ 8  │ emerald                  │ default     │ N/A     │ fork    │ 1039     │ 9D     │ 0    │ online    │ 0%       │ 32.7mb   │ root     │ disabled │
+│ 6  │ escapetable              │ default     │ 1.0.0   │ cluster │ 1000     │ 9D     │ 0    │ online    │ 0%       │ 47.8mb   │ root     │ disabled │
+│ 13 │ gokalaf                  │ default     │ 1.0.0   │ fork    │ 676461   │ 5D     │ 1    │ online    │ 0%       │ 107.4mb  │ root     │ disabled │
+│ 16 │ hank                     │ default     │ 1.0.0   │ fork    │ 3212105  │ 4h     │ 3    │ online    │ 0%       │ 158.5mb  │ root     │ disabled │
+│ 10 │ kimdinliyor              │ default     │ 1.0.0   │ cluster │ 1046     │ 9D     │ 0    │ online    │ 0%       │ 53.3mb   │ root     │ disabled │
+│ 12 │ lacivert-teknoloji       │ default     │ 1.0.0   │ cluster │ 1088     │ 9D     │ 0    │ online    │ 0%       │ 46.5mb   │ root     │ disabled │
+│ 2  │ maison-nomade-contact    │ default     │ N/A     │ fork    │ 976      │ 9D     │ 0    │ online    │ 0%       │ 32.4mb   │ root     │ disabled │
+│ 23 │ mkg-api                  │ default     │ 0.0.0   │ fork    │ 3578779  │ 0s     │ 0    │ online    │ 0%       │ 14.9mb   │ root     │ disabled │
+│ 4  │ nasiloldu                │ default     │ N/A     │ fork    │ 999      │ 9D     │ 0    │ online    │ 0%       │ 83.9mb   │ root     │ disabled │
+│ 18 │ neon-api                 │ default     │ 0.0.0   │ fork    │ 1137     │ 9D     │ 0    │ online    │ 0%       │ 41.2mb   │ root     │ disabled │
+│ 14 │ ozelilgi                 │ default     │ 1.0.0   │ fork    │ 1100     │ 9D     │ 0    │ online    │ 0%       │ 48.6mb   │ root     │ disabled │
+│ 3  │ postakod                 │ default     │ 1.0.0   │ fork    │ 983      │ 9D     │ 0    │ online    │ 0%       │ 81.6mb   │ root     │ disabled │
+│ 7  │ toov                     │ default     │ 1.0.0   │ cluster │ 1030     │ 9D     │ 0    │ online    │ 0%       │ 47.7mb   │ root     │ disabled │
+│ 11 │ tutturduk                │ default     │ 1.0.0   │ fork    │ 1082     │ 9D     │ 0    │ online    │ 0%       │ 74.2mb   │ root     │ disabled │
+│ 0  │ watermarktoo-backend     │ default     │ 1.0.0   │ cluster │ 969      │ 9D     │ 0    │ online    │ 0%       │ 65.4mb   │ root     │ disabled │
+│ 1  │ yosun-restaurant         │ default     │ 1.0.0   │ fork    │ 3578748  │ 0s     │ 865… │ online    │ 0%       │ 54.6mb   │ root     │ disabled │
+└────┴──────────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+root@162-55-4-35:/var/www/mkg# pm2 save
+[PM2] Saving current process list...
+
+>>>> In-memory PM2 is out-of-date, do:
+>>>> $ pm2 update
+In memory PM2 version: 6.0.11
+Local PM2 version: 6.0.14
+
+[PM2] Successfully saved in /root/.pm2/dump.pm2
+root@162-55-4-35:/var/www/mkg# pm2 startup
+[PM2] Init System found: systemd
+Platform systemd
+Template
+[Unit]
+Description=PM2 process manager
+Documentation=https://pm2.keymetrics.io/
+After=network.target
+
+[Service]
+Type=forking
+User=root
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+Environment=PATH=/root/.nvm/versions/node/v22.22.2/bin:/root/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/root/android-sdk/cmdline-tools/latest/bin:/root/android-sdk/platform-tools:/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+Environment=PM2_HOME=/root/.pm2
+PIDFile=/root/.pm2/pm2.pid
+Restart=on-failure
+
+ExecStart=/root/.nvm/versions/node/v22.22.2/lib/node_modules/pm2/bin/pm2 resurrect
+ExecReload=/root/.nvm/versions/node/v22.22.2/lib/node_modules/pm2/bin/pm2 reload all
+ExecStop=/root/.nvm/versions/node/v22.22.2/lib/node_modules/pm2/bin/pm2 kill
+
+[Install]
+WantedBy=multi-user.target
+
+Target path
+/etc/systemd/system/pm2-root.service
+Command list
+[ 'systemctl enable pm2-root' ]
+[PM2] Writing init configuration in /etc/systemd/system/pm2-root.service
+[PM2] Making script booting at startup...
+[PM2] [-] Executing: systemctl enable pm2-root...
+[PM2] [v] Command successfully executed.
++---------------------------------------+
+[PM2] Freeze a process list on reboot via:
+$ pm2 save
+
+[PM2] Remove init script via:
+$ pm2 unstartup systemd
+root@162-55-4-35:/var/www/mkg# pm2 env mkg-api 2>/dev/null | grep -E "LOCAL_STORAGE_DIR|PORT|NODE_ENV"
+root@162-55-4-35:/var/www/mkg#
