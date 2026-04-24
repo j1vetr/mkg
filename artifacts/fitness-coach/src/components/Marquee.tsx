@@ -1,13 +1,15 @@
 export default function Marquee() {
+  // Pre-uppercased Turkish strings so we don't rely on CSS text-transform,
+  // which incorrectly maps lowercase "i" to "I" instead of the Turkish "İ".
   const items = [
-    "Kişiye Özel Antrenman",
-    "Bilimsel Temeller",
-    "7/24 WhatsApp",
-    "Haftalık Revizyon",
-    "Kan Tahlili Analizi",
-    "Gerçek Dönüşüm",
-    "Uzaktan Eğitim",
-    "Sana Özel Sistem",
+    "KİŞİYE ÖZEL ANTRENMAN",
+    "BİLİMSEL TEMELLER",
+    "7/24 WHATSAPP",
+    "HAFTALIK REVİZYON",
+    "KAN TAHLİLİ ANALİZİ",
+    "GERÇEK DÖNÜŞÜM",
+    "UZAKTAN EĞİTİM",
+    "SANA ÖZEL SİSTEM",
   ];
 
   return (
@@ -30,7 +32,6 @@ export default function Marquee() {
               fontSize: "0.8rem",
               letterSpacing: "0.22em",
               fontWeight: 500,
-              textTransform: "uppercase",
               whiteSpace: "nowrap",
             }}
           >
